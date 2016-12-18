@@ -1,4 +1,6 @@
 .DS_Store
+_Debug/
+_Release/
 b/
 Charm.app
 CharmCMake.h
