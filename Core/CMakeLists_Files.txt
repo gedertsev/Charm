@@ -1,0 +1,70 @@
+
+
+set(Files_h
+	CharmCommand.h
+	CharmConstants.h
+	CharmDataModel.h
+	CharmDataModelAdapterInterface.h
+	CharmExceptions.h
+	CommandEmitterInterface.h
+	Configuration.h
+	Controller.h
+	ControllerInterface.h
+	Dates.h
+	Event.h
+	EventModelInterface.h
+	Installation.h
+	MySqlStorage.h
+	SmartNameCache.h
+	SqLiteStorage.h
+	SqlRaiiTransactor.h
+	SqlStorage.h
+	State.h
+	StorageInterface.h
+	Task.h
+	TaskListMerger.h
+	TaskModelInterface.h
+	TaskTreeItem.h
+	TimeSpans.h
+	UIStateInterface.h
+	User.h
+	ViewInterface.h
+	XmlSerialization.h
+)
+
+set(Files
+	CharmCommand.cpp
+	CharmConstants.cpp
+	CharmDataModel.cpp
+	CharmExceptions.cpp
+	Configuration.cpp
+	Controller.cpp
+	Dates.cpp
+	Event.cpp
+	MySqlStorage.cpp
+	SmartNameCache.cpp
+	SqLiteStorage.cpp
+	SqlRaiiTransactor.cpp
+	SqlStorage.cpp
+	State.cpp
+	Task.cpp
+	TaskListMerger.cpp
+	TaskTreeItem.cpp
+	TimeSpans.cpp
+	XmlSerialization.cpp
+)
+
+set(SOURCES
+	${Files}
+)
+
+if(MSVC_IDE)
+	source_group("" FILES ${Files_h} ${Files} CMakeLists_Files.txt)
+
+	set(SOURCES ${SOURCES}
+		${Files_h}
+		CMakeLists_Files.txt
+	)
+endif()
+
+
