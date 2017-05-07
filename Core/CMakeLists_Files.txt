@@ -9,7 +9,6 @@ set(Files_h
 	CommandEmitterInterface.h
 	Configuration.h
 	Controller.h
-	ControllerInterface.h
 	Dates.h
 	Event.h
 	EventModelInterface.h
@@ -20,7 +19,6 @@ set(Files_h
 	SqlRaiiTransactor.h
 	SqlStorage.h
 	State.h
-	StorageInterface.h
 	Task.h
 	TaskListMerger.h
 	TaskModelInterface.h
@@ -28,7 +26,6 @@ set(Files_h
 	TimeSpans.h
 	UIStateInterface.h
 	User.h
-	ViewInterface.h
 	XmlSerialization.h
 )
 
@@ -52,6 +49,7 @@ set(Files
 	TaskTreeItem.cpp
 	TimeSpans.cpp
 	XmlSerialization.cpp
+	CharmQtCompat.h
 )
 
 set(SOURCES
