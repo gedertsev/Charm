@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2016-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Hannah von Reth <hannah.vonreth@kdab.com>
 
@@ -27,12 +27,11 @@
 
 class QWidget;
 
-namespace WidgetUtils
-{
-    void restoreGeometry( QWidget *widget, const QString &metaKey );
-    void saveGeometry( QWidget *widget, const QString &metaKey );
+namespace WidgetUtils {
+void restoreGeometry(QWidget *widget, const QString &metaKey);
+void saveGeometry(QWidget *widget, const QString &metaKey);
 
-    void updateToolButtonStyle(QWidget *widget);
+void updateToolButtonStyle(QWidget *widget);
 }
 
 #endif // WIDGETUTILS_H

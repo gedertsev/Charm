@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -31,27 +31,29 @@
 
 #include <QScopedPointer>
 
-namespace Ui { class MonthlyTimesheetConfigurationDialog; }
+namespace Ui {
+class MonthlyTimesheetConfigurationDialog;
+}
 
 class MonthlyTimesheetConfigurationDialog : public ReportConfigurationDialog
 {
     Q_OBJECT
 
 public:
-    explicit MonthlyTimesheetConfigurationDialog( QWidget* parent );
+    explicit MonthlyTimesheetConfigurationDialog(QWidget *parent);
     ~MonthlyTimesheetConfigurationDialog() override;
 
     void showReportPreviewDialog() override;
-    void showEvent( QShowEvent* ) override;
-    void setDefaultMonth( int yearOfMonth, int month );
+    void showEvent(QShowEvent *) override;
+    void setDefaultMonth(int yearOfMonth, int month);
 
 public Q_SLOTS:
     void accept() override;
 
 private Q_SLOTS:
-    void slotCheckboxSubtasksOnlyChecked( bool );
+    void slotCheckboxSubtasksOnlyChecked(bool);
     void slotStandardTimeSpansChanged();
-    void slotMonthComboItemSelected( int );
+    void slotMonthComboItemSelected(int);
     void slotSelectTask();
 
 private:

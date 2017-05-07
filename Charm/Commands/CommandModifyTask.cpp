@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -23,11 +23,11 @@
 */
 
 #include "CommandModifyTask.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
-CommandModifyTask::CommandModifyTask( const Task& task, QObject* parent )
-    : CharmCommand( tr("Edit Task"), parent )
-    , m_task( task )
+CommandModifyTask::CommandModifyTask(const Task &task, QObject *parent)
+    : CharmCommand(tr("Edit Task"), parent)
+    , m_task(task)
 {
 }
 
@@ -40,19 +40,17 @@ bool CommandModifyTask::prepare()
     return true;
 }
 
-bool CommandModifyTask::execute( ControllerInterface* controller )
+bool CommandModifyTask::execute(Controller *controller)
 {
-    m_success = controller->modifyTask( m_task );
+    m_success = controller->modifyTask(m_task);
     return m_success;
 }
 
 bool CommandModifyTask::finalize()
 {
-    if ( !m_success ) {
+    if (!m_success) {
         // this might be slightly to little informative:
-        showInformation( tr( "Unable to modify task" ), tr( "Modifying the task failed." ) );
+        showInformation(tr("Unable to modify task"), tr("Modifying the task failed."));
     }
     return m_success;
 }
-
-#include "moc_CommandModifyTask.cpp"

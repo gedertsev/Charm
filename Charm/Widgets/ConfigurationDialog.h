@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -36,13 +36,13 @@ class ConfigurationDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ConfigurationDialog( const Configuration&, QWidget* parent );
+    explicit ConfigurationDialog(const Configuration &, QWidget *parent);
     Configuration configuration() const;
 
 private Q_SLOTS:
     void on_databaseLocationButton_clicked();
-    void on_databaseLocation_textChanged( const QString& text );
-    void on_nameLineEdit_textChanged( const QString& text );
+    void on_databaseLocation_textChanged(const QString &text);
+    void on_nameLineEdit_textChanged(const QString &text);
 
     void accept() override;
 

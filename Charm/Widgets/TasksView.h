@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -30,7 +30,6 @@
 #include <Core/Event.h>
 #include <Core/State.h>
 #include <Core/CommandEmitterInterface.h>
-#include <Core/ViewInterface.h>
 #include <Core/UIStateInterface.h>
 
 #include <QDialog>
@@ -40,23 +39,20 @@ class TasksViewDelegate;
 class QToolBar;
 class QTreeView;
 
-class TasksView : public QDialog,
-                  public UIStateInterface
+class TasksView : public QDialog, public UIStateInterface
 {
     Q_OBJECT
 
 public:
-    explicit TasksView (QWidget* parent = nullptr );
+    explicit TasksView (QWidget *parent = nullptr);
     ~TasksView() override;
 
-    void populateEditMenu( QMenu* );
-
-
+    void populateEditMenu(QMenu *);
 
 public Q_SLOTS:
-    void commitCommand( CharmCommand* ) override;
+    void commitCommand(CharmCommand *) override;
 
-    void stateChanged( State previous ) override;
+    void stateChanged(State previous) override;
     void configurationChanged() override;
 
     void restoreGuiState() override;
@@ -65,20 +61,20 @@ public Q_SLOTS:
 Q_SIGNALS:
     // FIXME connect to MainWindow
     void saveConfiguration();
-    void emitCommand( CharmCommand* ) override;
-    void emitCommandRollback( CharmCommand* ) override;
+    void emitCommand(CharmCommand *) override;
+    void emitCommandRollback(CharmCommand *) override;
 
 private Q_SLOTS:
     void actionNewTask();
     void actionNewSubTask();
     void actionEditTask();
     void actionDeleteTask();
-    void slotFiltertextChanged( const QString& filtertext );
+    void slotFiltertextChanged(const QString &filtertext);
     void taskPrefilteringChanged();
-    void slotContextMenuRequested( const QPoint& );
+    void slotContextMenuRequested(const QPoint &);
 
-    void slotEventActivated( EventId );
-    void slotEventDeactivated( EventId );
+    void slotEventActivated(EventId);
+    void slotEventDeactivated(EventId);
     // this method is called every time the UI actions need update, for
     // example when the current index changes:
     void configureUi();
@@ -87,19 +83,19 @@ private:
 
     // helper to retrieve selected task:
     Task selectedTask();
-    void addTaskHelper( const Task& parent );
+    void addTaskHelper(const Task &parent);
 
-    QToolBar* m_toolBar;
-    TasksViewDelegate* m_delegate;
+    QToolBar *m_toolBar;
+    TasksViewDelegate *m_delegate;
     QAction m_actionNewTask;
     QAction m_actionNewSubTask;
     QAction m_actionEditTask;
     QAction m_actionDeleteTask;
     QAction m_actionExpandTree;
     QAction m_actionCollapseTree;
-    QAction* m_showCurrentOnly;
-    QAction* m_showSubscribedOnly;
-    QTreeView* m_treeView;
+    QAction *m_showCurrentOnly;
+    QAction *m_showSubscribedOnly;
+    QTreeView *m_treeView;
 };
 
 #endif

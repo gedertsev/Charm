@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -32,13 +32,14 @@
 #include <QScopedPointer>
 
 namespace Ui {
-    class EnterVacationDialog;
+class EnterVacationDialog;
 }
 
-class EnterVacationDialog : public QDialog {
+class EnterVacationDialog : public QDialog
+{
     Q_OBJECT
 public:
-    explicit EnterVacationDialog( QWidget* parent=nullptr );
+    explicit EnterVacationDialog(QWidget *parent = nullptr);
     ~EnterVacationDialog() override;
 
     EventList events() const;

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2010-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2010-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -43,15 +43,15 @@ public:
     int testInstallationId() const;
 
 protected:
-    Controller* controller() const;
-    CharmDataModel* model() const;
-    Configuration* configuration() const;
+    Controller *controller() const;
+    CharmDataModel *model() const;
+    Configuration *configuration() const;
     QString databasePath() const;
 
 private:
-    Controller* m_controller = nullptr;
-    CharmDataModel* m_model = nullptr;
-    Configuration* m_configuration;
+    Controller *m_controller = nullptr;
+    CharmDataModel *m_model = nullptr;
+    Configuration *m_configuration;
     QString m_localPath;
 };
 

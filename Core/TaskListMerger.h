@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -48,15 +48,15 @@ class TaskListMerger
 public:
     TaskListMerger();
 
-    void setOldTasks( const TaskList& tasks );
-    void setNewTasks( const TaskList& tasks );
+    void setOldTasks(const TaskList &tasks);
+    void setNewTasks(const TaskList &tasks);
 
     TaskList mergedTaskList() const;
     TaskList addedTasks() const;
     TaskList modifiedTasks() const;
 
 private:
-    void verifyTaskList( const TaskList& tasks );
+    void verifyTaskList(const TaskList &tasks);
     void calculateResults() const;
 
     mutable bool m_resultsValid = false;

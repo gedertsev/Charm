@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -30,31 +30,31 @@
 #include "ApplicationCore.h"
 #include "ModelConnector.h"
 
-#define MODEL ( ApplicationCore::instance().model() )
-#define DATAMODEL ( MODEL.charmDataModel() )
-#define VIEW ( ApplicationCore::instance().mainView() )
-#define TRAY ( ApplicationCore::instance().trayIcon() )
+#define MODEL (ApplicationCore::instance().model())
+#define DATAMODEL (MODEL.charmDataModel())
+#define VIEW (ApplicationCore::instance().mainView())
+#define TRAY (ApplicationCore::instance().trayIcon())
 
 namespace Charm {
-    enum class SortOrder {
-        None = 0,
-        StartTime,
-        EndTime,
-        TaskId,
-        Comment
-    };
+enum class SortOrder {
+    None = 0,
+    StartTime,
+    EndTime,
+    TaskId,
+    Comment
+};
 
-    typedef QVarLengthArray<SortOrder, 5> SortOrderList;
+typedef QVarLengthArray<SortOrder, 5> SortOrderList;
 
-    void connectControllerAndView( Controller*, CharmWindow* );
-    int collatorCompare( const QString &left, const QString &right );
-    EventIdList eventIdsSortedBy( EventIdList, const SortOrderList &orders );
-    EventIdList eventIdsSortedBy( EventIdList, SortOrder order );
-    /** Return those ids in the input list that elements of the subtree
-     * under the parent task, which includes the parent task. */
-    EventIdList filteredBySubtree( EventIdList, TaskId parent, bool exclude=false );
-    QString elidedTaskName( const QString& text, const QFont& font, int width );
-    QString reportStylesheet( const QPalette& palette );
+void connectControllerAndView(Controller *, CharmWindow *);
+int collatorCompare(const QString &left, const QString &right);
+EventIdList eventIdsSortedBy(EventIdList, const SortOrderList &orders);
+EventIdList eventIdsSortedBy(EventIdList, SortOrder order);
+/** Return those ids in the input list that elements of the subtree
+ * under the parent task, which includes the parent task. */
+EventIdList filteredBySubtree(EventIdList, TaskId parent, bool exclude = false);
+QString elidedTaskName(const QString &text, const QFont &font, int width);
+QString reportStylesheet(const QPalette &palette);
 }
 
 Q_DECLARE_TYPEINFO(Charm::SortOrder, Q_MOVABLE_TYPE);

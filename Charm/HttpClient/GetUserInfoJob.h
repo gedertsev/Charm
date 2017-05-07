@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2015-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2015-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Pál Tóth <pal.toth@kdab.com>
 
@@ -34,13 +34,13 @@ class GetUserInfoJob : public HttpJob
     Q_OBJECT
 public:
 
-    explicit GetUserInfoJob(QObject* parent=nullptr, const QString &schema = QStringLiteral(" "));
+    explicit GetUserInfoJob(QObject *parent = nullptr, const QString &schema = QStringLiteral(" "));
     ~GetUserInfoJob() override;
 
     QByteArray userInfo() const;
 
     QUrl downloadUrl() const;
-    void setDownloadUrl(const QUrl& url);
+    void setDownloadUrl(const QUrl &url);
     QString schema() const;
     void setSchema(const QString &schema);
 

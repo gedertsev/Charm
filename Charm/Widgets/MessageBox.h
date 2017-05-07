@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -26,21 +26,13 @@
 
 #include <QMessageBox>
 
-namespace MessageBox
-{
-int question( QWidget* parent,
-              const QString& title,
-              const QString& text,
-              const QString& yesLabel,
-              const QString& noLabel,
-              QMessageBox::StandardButton defaultButton=QMessageBox::NoButton );
+namespace MessageBox {
+int question(QWidget *parent, const QString &title, const QString &text, const QString &yesLabel,
+             const QString &noLabel,
+             QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
 
-int warning( QWidget* parent,
-              const QString& title,
-              const QString& text,
-              const QString& yesLabel,
-              const QString& noLabel,
-              QMessageBox::StandardButton defaultButton=QMessageBox::NoButton );
-
+int warning(QWidget *parent, const QString &title, const QString &text, const QString &yesLabel,
+            const QString &noLabel,
+            QMessageBox::StandardButton defaultButton = QMessageBox::NoButton);
 }
 #endif

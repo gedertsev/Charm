@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -23,13 +23,13 @@
 
 #include "CommandModifyEvent.h"
 
-#include "Core/ControllerInterface.h"
-#include "Core/StorageInterface.h"
+#include "Core/Controller.h"
+#include "Core/SqlStorage.h"
 
-CommandModifyEvent::CommandModifyEvent( const Event& event, const Event& oldEvent, QObject* parent )
-    : CharmCommand( tr("Modify Event"), parent )
-    , m_event( event )
-    , m_oldEvent( oldEvent )
+CommandModifyEvent::CommandModifyEvent(const Event &event, const Event &oldEvent, QObject *parent)
+    : CharmCommand(tr("Modify Event"), parent)
+    , m_event(event)
+    , m_oldEvent(oldEvent)
 {
 }
 
@@ -42,14 +42,14 @@ bool CommandModifyEvent::prepare()
     return true;
 }
 
-bool CommandModifyEvent::execute( ControllerInterface* controller )
+bool CommandModifyEvent::execute(Controller *controller)
 {
-    return controller->modifyEvent( m_event );
+    return controller->modifyEvent(m_event);
 }
 
-bool CommandModifyEvent::rollback(ControllerInterface *controller)
+bool CommandModifyEvent::rollback(Controller *controller)
 {
-    return controller->modifyEvent( m_oldEvent );
+    return controller->modifyEvent(m_oldEvent);
 }
 
 bool CommandModifyEvent::finalize()
@@ -59,11 +59,8 @@ bool CommandModifyEvent::finalize()
 
 void CommandModifyEvent::eventIdChanged(int oid, int nid)
 {
-    if(m_event.id() == oid)
-    {
+    if (m_event.id() == oid) {
         m_event.setId(nid);
         m_oldEvent.setId(nid);
     }
 }
-
-#include "moc_CommandModifyEvent.cpp"

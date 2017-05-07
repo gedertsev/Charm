@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -26,38 +26,46 @@
 
 #include <QString>
 
-class User {
+class User
+{
 public:
     User()
-    {}
+    {
+    }
 
-    User( const QString& name, int id )
-        : m_name( name )
-        , m_id( id )
-    {}
+    User(const QString &name, int id)
+        : m_name(name)
+        , m_id(id)
+    {
+    }
 
-    bool operator==( const User& other ) const
+    bool operator==(const User &other) const
     {
         return m_name == other.m_name && m_id == other.m_id;
     }
 
-    bool isValid() const {
+    bool isValid() const
+    {
         return m_id != 0;
     }
 
-    const QString& name() const {
+    const QString &name() const
+    {
         return m_name;
     }
 
-    void setName( const QString& newname ) {
+    void setName(const QString &newname)
+    {
         m_name = newname;
     }
 
-    int id() const {
+    int id() const
+    {
         return m_id;
     }
 
-    void setId( int newid ) {
+    void setId(int newid)
+    {
         m_id = newid;
     }
 

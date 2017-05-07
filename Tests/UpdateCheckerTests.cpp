@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2010-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2010-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -26,26 +26,23 @@
 
 #include <QtTest/QtTest>
 
-
 void UpdateCheckerTests::testVersionComparison()
 {
-    QVERIFY( Charm::versionLessThan( QStringLiteral("0.1"), QStringLiteral("0.2") ) );
-    QVERIFY( Charm::versionLessThan( QStringLiteral("1.9.0"), QStringLiteral("1.10.0") ) );
-    QVERIFY( Charm::versionLessThan( QStringLiteral("0.1"), QStringLiteral("0.1.1") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral("1.9.0"), QStringLiteral("1.9.0") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral("1.10.0"), QStringLiteral("1.9.0") ) );
-    QVERIFY( Charm::versionLessThan( QStringLiteral("1.9.0"), QStringLiteral("1.9.0.1") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral("1.9.0"), QStringLiteral("1.9.abc") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral("2.0.1"), QStringLiteral("1.20.0") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral("1.9.0.1"), QStringLiteral("1.9.0.0.1") ) );
-    QVERIFY( Charm::versionLessThan( QString(), QStringLiteral("0.2") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral("0.2"), QString() ) );
-    QVERIFY( ! Charm::versionLessThan( QString(), QString() ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral(" "), QStringLiteral(".") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral(" ."), QStringLiteral("....") ) );
-    QVERIFY( ! Charm::versionLessThan( QStringLiteral(".1."), QStringLiteral(" ") ) );
+    QVERIFY(Charm::versionLessThan(QStringLiteral("0.1"), QStringLiteral("0.2")));
+    QVERIFY(Charm::versionLessThan(QStringLiteral("1.9.0"), QStringLiteral("1.10.0")));
+    QVERIFY(Charm::versionLessThan(QStringLiteral("0.1"), QStringLiteral("0.1.1")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral("1.9.0"), QStringLiteral("1.9.0")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral("1.10.0"), QStringLiteral("1.9.0")));
+    QVERIFY(Charm::versionLessThan(QStringLiteral("1.9.0"), QStringLiteral("1.9.0.1")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral("1.9.0"), QStringLiteral("1.9.abc")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral("2.0.1"), QStringLiteral("1.20.0")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral("1.9.0.1"), QStringLiteral("1.9.0.0.1")));
+    QVERIFY(Charm::versionLessThan(QString(), QStringLiteral("0.2")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral("0.2"), QString()));
+    QVERIFY(!Charm::versionLessThan(QString(), QString()));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral(" "), QStringLiteral(".")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral(" ."), QStringLiteral("....")));
+    QVERIFY(!Charm::versionLessThan(QStringLiteral(".1."), QStringLiteral(" ")));
 }
 
-QTEST_MAIN( UpdateCheckerTests )
-
-#include "moc_UpdateCheckerTests.cpp"
+QTEST_MAIN(UpdateCheckerTests)

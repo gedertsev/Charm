@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -23,11 +23,11 @@
 */
 
 #include "CommandSetAllTasks.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
-CommandSetAllTasks::CommandSetAllTasks( const TaskList& tasks, QObject* parent )
-    : CharmCommand( tr("Import Tasks"), parent )
-    , m_tasks( tasks )
+CommandSetAllTasks::CommandSetAllTasks(const TaskList &tasks, QObject *parent)
+    : CharmCommand(tr("Import Tasks"), parent)
+    , m_tasks(tasks)
 {
 }
 
@@ -40,9 +40,9 @@ bool CommandSetAllTasks::prepare()
     return true;
 }
 
-bool CommandSetAllTasks::execute( ControllerInterface* controller )
+bool CommandSetAllTasks::execute(Controller *controller)
 {
-    m_success = controller->setAllTasks( m_tasks );
+    m_success = controller->setAllTasks(m_tasks);
     return m_success;
 }
 
@@ -50,5 +50,3 @@ bool CommandSetAllTasks::finalize()
 {
     return m_success;
 }
-
-#include "moc_CommandSetAllTasks.cpp"

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -35,20 +35,20 @@ class CommandMakeEvent : public CharmCommand
     Q_OBJECT
 
 public:
-    explicit CommandMakeEvent( const Task& task, QObject* parent );
-    explicit CommandMakeEvent( const Event& event, QObject* parent );
+    explicit CommandMakeEvent(const Task &task, QObject *parent);
+    explicit CommandMakeEvent(const Event &event, QObject *parent);
     ~CommandMakeEvent() override;
 
     bool prepare() override;
-    bool execute( ControllerInterface* ) override;
-    bool rollback( ControllerInterface* ) override;
+    bool execute(Controller *) override;
+    bool rollback(Controller *) override;
     bool finalize() override;
 
 public Q_SLOTS:
-    void eventIdChanged(int,int) override;
+    void eventIdChanged(int, int) override;
 
 Q_SIGNALS:
-    void finishedOk( const Event& );
+    void finishedOk(const Event &);
 
 private:
     bool m_rollback = false; //don't show the event in finalize

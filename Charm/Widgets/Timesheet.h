@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -34,13 +34,11 @@ class TimeSheetReport : public ReportPreviewWindow
     Q_OBJECT
 
 public:
-    explicit TimeSheetReport( QWidget* parent = nullptr );
+    explicit TimeSheetReport(QWidget *parent = nullptr);
     ~TimeSheetReport() override;
 
-    virtual void setReportProperties( const QDate& start,
-                                      const QDate& end,
-                                      TaskId rootTask,
-                                      bool activeTasksOnly );
+    virtual void setReportProperties(const QDate &start, const QDate &end, TaskId rootTask,
+                                     bool activeTasksOnly);
 
 protected:
 
@@ -52,21 +50,31 @@ protected:
 protected:
 
     inline QDate startDate() const
-        { return m_start; }
+    {
+        return m_start;
+    }
 
     inline QDate endDate() const
-        { return m_end; }
+    {
+        return m_end;
+    }
 
     inline TaskId rootTask() const
-        { return m_rootTask; }
+    {
+        return m_rootTask;
+    }
 
     inline bool activeTasksOnly() const
-        { return m_activeTasksOnly; }
+    {
+        return m_activeTasksOnly;
+    }
 
     inline const SecondsMap &secondsMap() const
-        { return m_secondsMap; }
+    {
+        return m_secondsMap;
+    }
 
-    QString getFileName( const QString& filter );
+    QString getFileName(const QString &filter);
 
     void slotUpdate() override;
     void slotSaveToText() override;

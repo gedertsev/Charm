@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2012-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2012-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -26,20 +26,21 @@
 
 #include "Task.h"
 
-class SmartNameCache {
+class SmartNameCache
+{
 public:
-    void setAllTasks( const TaskList& taskList );
-    QString smartName( const TaskId& id ) const;
-    void addTask( const Task& task );
-    void modifyTask( const Task& task );
-    void deleteTask( const Task& task );
+    void setAllTasks(const TaskList &taskList);
+    QString smartName(const TaskId &id) const;
+    void addTask(const Task &task);
+    void modifyTask(const Task &task);
+    void deleteTask(const Task &task);
     void clearTasks();
 
 private:
     void regenerateSmartNames();
     void sortTasks();
-    Task findTask( TaskId id ) const;
-    QString makeCombined( const Task& task ) const;
+    Task findTask(TaskId id) const;
+    QString makeCombined(const Task &task) const;
 
 private:
     QMap<TaskId, QString> m_smartTaskNamesById;

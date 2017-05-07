@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -22,11 +22,11 @@
 */
 
 #include "CommandDeleteEvent.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
-CommandDeleteEvent::CommandDeleteEvent( const Event& event, QObject* parent )
-    : CharmCommand( tr("Delete Event"), parent )
-    , m_event( event )
+CommandDeleteEvent::CommandDeleteEvent(const Event &event, QObject *parent)
+    : CharmCommand(tr("Delete Event"), parent)
+    , m_event(event)
 {
 }
 
@@ -39,17 +39,17 @@ bool CommandDeleteEvent::prepare()
     return true;
 }
 
-bool CommandDeleteEvent::execute( ControllerInterface* controller )
+bool CommandDeleteEvent::execute(Controller *controller)
 {
-    return controller->deleteEvent( m_event );
+    return controller->deleteEvent(m_event);
 }
 
-bool CommandDeleteEvent::rollback(ControllerInterface *controller)
+bool CommandDeleteEvent::rollback(Controller *controller)
 {
     int oldId = m_event.id();
     m_event = controller->cloneEvent(m_event);
     int newId = m_event.id();
-    if(oldId != newId)
+    if (oldId != newId)
         Q_EMIT emitSlotEventIdChanged(oldId, newId);
     return m_event.isValid();
 }
@@ -61,8 +61,6 @@ bool CommandDeleteEvent::finalize()
 
 void CommandDeleteEvent::eventIdChanged(int oid, int nid)
 {
-    if(m_event.id() == oid)
+    if (m_event.id() == oid)
         m_event.setId(nid);
 }
-
-#include "moc_CommandDeleteEvent.cpp"

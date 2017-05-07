@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2015-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2015-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mathias Hasselmann <mathias.hasselmann@kdab.com>
 
@@ -37,11 +37,11 @@ class CommentEditorPopup : public QDialog
     Q_OBJECT
 
 public:
-    explicit CommentEditorPopup( QWidget *parent = nullptr );
+    explicit CommentEditorPopup(QWidget *parent = nullptr);
     ~CommentEditorPopup() override;
 
 public Q_SLOTS:
-    void loadEvent( EventId id );
+    void loadEvent(EventId id);
     void accept() override;
 
 private:

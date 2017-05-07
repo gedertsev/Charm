@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2015-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2015-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Guillermo A. Amaral <gamaral@kdab.com>
 
@@ -30,47 +30,74 @@
 
 class QIODevice;
 
-class CharmCommandSession : public QObject,
-                            public CharmDataModelAdapterInterface
+class CharmCommandSession : public QObject, public CharmDataModelAdapterInterface
 {
     enum State
     {
-        InvalidState   = 0,
+        InvalidState = 0,
         HandshakeState = 1,
-        CommandState   = 2
+        CommandState = 2
     };
 
     Q_OBJECT
 public:
-    explicit CharmCommandSession(QObject* parent = nullptr);
+    explicit CharmCommandSession(QObject *parent = nullptr);
     ~CharmCommandSession();
 
-    QIODevice* device() const;
-    void setDevice(QIODevice* device);
+    QIODevice *device() const;
+    void setDevice(QIODevice *device);
 
 public: /* CharmDataModelAdapterInterface */
     void resetTasks();
-    void taskAboutToBeAdded( TaskId, int ) {};
-    void taskAdded( TaskId );
-    void taskModified( TaskId );
-    void taskParentChanged( TaskId, TaskId, TaskId ) {};
-    void taskAboutToBeDeleted( TaskId ) {};
-    void taskDeleted( TaskId ) {};
+    void taskAboutToBeAdded(TaskId, int)
+    {
+    }
 
-    void resetEvents() {};
-    void eventAboutToBeAdded( EventId id ) {};
-    void eventAdded( EventId id ) {};
-    void eventModified( EventId id, Event discardedEvent ) {};
-    void eventAboutToBeDeleted( EventId id ) {};
-    void eventDeleted( EventId id ) {};
+    void taskAdded(TaskId);
+    void taskModified(TaskId);
+    void taskParentChanged(TaskId, TaskId, TaskId)
+    {
+    }
 
-    void eventActivated( EventId id );
-    void eventDeactivated( EventId id );
+    void taskAboutToBeDeleted(TaskId)
+    {
+    }
+
+    void taskDeleted(TaskId)
+    {
+    }
+
+    void resetEvents()
+    {
+    }
+
+    void eventAboutToBeAdded(EventId)
+    {
+    }
+
+    void eventAdded(EventId)
+    {
+    }
+
+    void eventModified(EventId, Event)
+    {
+    }
+
+    void eventAboutToBeDeleted(EventId)
+    {
+    }
+
+    void eventDeleted(EventId)
+    {
+    }
+
+    void eventActivated(EventId id);
+    void eventDeactivated(EventId id);
 
 protected:
     void reset();
 
-private slots:
+private Q_SLOTS:
     void onReadyRead();
 
 private:
@@ -85,7 +112,7 @@ private:
     void handleCommand(QByteArray payload);
 
 private:
-    QIODevice* m_device;
+    QIODevice *m_device;
     State m_state;
 };
 

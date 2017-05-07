@@ -1,11 +1,11 @@
 /*
-  UndoCharmCommandWrapper.cpp
+  CharmQtCompat.h
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2012-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
-  Author: Nicholas Van Sickle <nicholas.vansickle@kdab.com>
+  Author: Hannah von Reth <hannah.vonreth@kdab.com>
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -20,31 +20,25 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#ifndef CHARMQTCOMPAT_H
+#define CHARMQTCOMPAT_H
 
-#include "UndoCharmCommandWrapper.h"
+#include <QtGlobal>
 
-UndoCharmCommandWrapper::UndoCharmCommandWrapper(CharmCommand *command)
-    : m_command(command)
-{
-    setText(command->description());
-}
+#if QT_VERSION < QT_VERSION_CHECK(5, 7, 0)
 
-UndoCharmCommandWrapper::~UndoCharmCommandWrapper()
-{
-    delete m_command;
-}
+QT_BEGIN_NAMESPACE
 
-void UndoCharmCommandWrapper::undo()
-{
-    m_command->requestRollback();
-}
+// this adds const to non-const objects (like std::as_const)
+template <typename T>
+Q_DECL_CONSTEXPR typename std::add_const<T>::type &qAsConst(T &t) Q_DECL_NOTHROW { return t; }
 
-void UndoCharmCommandWrapper::redo()
-{
-    m_command->requestExecute();
-}
+// prevent rvalue arguments:
+template <typename T>
+void qAsConst(const T &&) Q_DECL_EQ_DELETE;
 
-CharmCommand *UndoCharmCommandWrapper::command() const
-{
-    return m_command;
-}
+QT_END_NAMESPACE
+
+#endif
+
+#endif // CHARMQTCOMPAT_H

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -40,16 +40,16 @@ public:
     Database();
     virtual ~Database();
 
-    void login() throw ( TimesheetProcessorException );
-    void initializeDatabase() throw ( TimesheetProcessorException );
-    void addEvent( const Event& event, const SqlRaiiTransactor& );
-    void deleteEventsForReport ( int userid, int index );
-    void checkUserid( int id ) throw (TimesheetProcessorException );
-    User getOrCreateUserByName( QString name ) throw (TimesheetProcessorException );
-    Task getTask( int taskid ) throw (TimesheetProcessorException );
-    TaskList getAllTasks() throw (TimesheetProcessorException );
+    void login() throw (TimesheetProcessorException);
+    void initializeDatabase() throw (TimesheetProcessorException);
+    void addEvent(const Event &event, const SqlRaiiTransactor &);
+    void deleteEventsForReport(int userid, int index);
+    void checkUserid(int id) throw (TimesheetProcessorException);
+    User getOrCreateUserByName(QString name) throw (TimesheetProcessorException);
+    Task getTask(int taskid) throw (TimesheetProcessorException);
+    TaskList getAllTasks() throw (TimesheetProcessorException);
 
-    QSqlDatabase& database();
+    QSqlDatabase &database();
 
 private:
     MySqlStorage m_storage;

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2011-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2011-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mike McQuaid <mike.mcquaid@kdab.com>
 
@@ -34,14 +34,14 @@ class MacIdleDetector : public IdleDetector
     Q_OBJECT
 
 public:
-    explicit MacIdleDetector( QObject* parent = nullptr );
+    explicit MacIdleDetector(QObject *parent = nullptr);
     // This method to be public due to lack of friend classes in Objective-C and
     // the lack inheritance of Objective-C classes from C++ ones.
     void idle();
 
 private:
     class Private;
-    Private* m_private;
+    Private *m_private;
 };
 
 #endif

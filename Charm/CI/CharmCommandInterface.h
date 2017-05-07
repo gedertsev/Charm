@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2015-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2015-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Guillermo A. Amaral <gamaral@kdab.com>
 
@@ -32,14 +32,14 @@ class CharmCommandInterface : public QObject
 {
     Q_OBJECT
 public:
-    explicit CharmCommandInterface(QObject* parent = nullptr);
+    explicit CharmCommandInterface(QObject *parent = nullptr);
     ~CharmCommandInterface();
 
     bool isStarted() const;
     void start();
     void stop();
 
-public slots:
+public Q_SLOTS:
     void configurationChanged();
 
 private:

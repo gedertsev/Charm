@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -23,14 +23,14 @@
 */
 
 #include "CommandImportFromXml.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
 #include <QDomDocument>
 #include <QFile>
 
-CommandImportFromXml::CommandImportFromXml( QString filename, QObject* parent )
-    : CharmCommand( tr("Import from XML"), parent )
-    , m_filename( filename )
+CommandImportFromXml::CommandImportFromXml(QString filename, QObject *parent)
+    : CharmCommand(tr("Import from XML"), parent)
+    , m_filename(filename)
 {
 }
 
@@ -43,21 +43,25 @@ bool CommandImportFromXml::prepare()
     return true;
 }
 
-bool CommandImportFromXml::execute( ControllerInterface* controller )
+bool CommandImportFromXml::execute(Controller *controller)
 {
-    QFile file( m_filename );
-    if ( file.open( QIODevice::ReadOnly ) ) {
+    QFile file(m_filename);
+    if (file.open(QIODevice::ReadOnly)) {
         QDomDocument document;
         QString errorMessage;
         int errorLine = 0;
         int errorColumn = 0;
-        if ( document.setContent( &file, &errorMessage, &errorLine, &errorColumn ) ) {
-            m_error = controller->importDatabaseFromXml( document );
+        if (document.setContent(&file, &errorMessage, &errorLine, &errorColumn)) {
+            m_error = controller->importDatabaseFromXml(document);
         } else {
-            m_error = tr( "Cannot read the XML syntax of the specified file: [%1:%2] %3" ).arg( QString::number( errorLine ), QString::number( errorColumn ), errorMessage );
+            m_error = tr("Cannot read the XML syntax of the specified file: [%1:%2] %3").arg(QString::number(
+                                                                                                 errorLine),
+                                                                                             QString::number(
+                                                                                                 errorColumn),
+                                                                                             errorMessage);
         }
     } else {
-        m_error = tr( "Cannot open the specified file: %1" ).arg( file.errorString() );
+        m_error = tr("Cannot open the specified file: %1").arg(file.errorString());
     }
     return true;
 }
@@ -65,10 +69,8 @@ bool CommandImportFromXml::execute( ControllerInterface* controller )
 bool CommandImportFromXml::finalize()
 {
     // any errors?
-    if ( ! m_error.isEmpty() ) {
-        showCritical( tr( "Error importing the Database" ), tr("An error has occurred:\n%1" ).arg( m_error ) );
-    }
+    if (!m_error.isEmpty())
+        showCritical(tr("Error importing the Database"),
+                     tr("An error has occurred:\n%1").arg(m_error));
     return true;
 }
-
-#include "moc_CommandImportFromXml.cpp"

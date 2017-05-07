@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -32,16 +32,19 @@ class QModelIndex;
 class TaskModelInterface
 {
 public:
-    virtual ~TaskModelInterface() {}
-    virtual Task taskForIndex( const QModelIndex& ) const = 0;
-    virtual QModelIndex indexForTaskId( TaskId ) const = 0;
-    virtual bool taskIsActive( const Task& task ) const = 0;
-    virtual bool taskHasChildren( const Task& task ) const = 0;
-    virtual bool taskIdExists( TaskId taskId ) const = 0;
+    virtual ~TaskModelInterface()
+    {
+    }
+
+    virtual Task taskForIndex(const QModelIndex &) const = 0;
+    virtual QModelIndex indexForTaskId(TaskId) const = 0;
+    virtual bool taskIsActive(const Task &task) const = 0;
+    virtual bool taskHasChildren(const Task &task) const = 0;
+    virtual bool taskIdExists(TaskId taskId) const = 0;
     // relayed model signals, in lack of notification in the view:
     // eventActivated was already taken by CharmDataModelAdapterInterface
-    virtual void eventActivationNotice( EventId id ) = 0;
-    virtual void eventDeactivationNotice( EventId id ) = 0;
+    virtual void eventActivationNotice(EventId id) = 0;
+    virtual void eventDeactivationNotice(EventId id) = 0;
 };
 
 #endif

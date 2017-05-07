@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -31,12 +31,11 @@ class TrayIcon : public QSystemTrayIcon
     Q_OBJECT
 
 public:
-    explicit TrayIcon(QObject* parent = nullptr);
+    explicit TrayIcon(QObject *parent = nullptr);
     ~TrayIcon() override;
 
 private Q_SLOTS:
     void slotActivated(QSystemTrayIcon::ActivationReason);
-
 };
 
 #endif // TRAYICON_H

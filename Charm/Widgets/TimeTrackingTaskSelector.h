@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -46,37 +46,37 @@ class TimeTrackingTaskSelector : public QWidget
 public:
     explicit TimeTrackingTaskSelector(QWidget *parent = nullptr);
 
-    void populate( const QVector<WeeklySummary>& summaries  );
+    void populate(const QVector<WeeklySummary> &summaries);
     void handleActiveEvents();
-    void taskSelected( const WeeklySummary& );
+    void taskSelected(const WeeklySummary &);
 
-    QMenu* menu() const;
+    QMenu *menu() const;
 
-    void populateEditMenu( QMenu* );
+    void populateEditMenu(QMenu *);
 
 Q_SIGNALS:
-    void startEvent( TaskId );
+    void startEvent(TaskId);
     void stopEvents();
     void updateSummariesPlease();
 
 private Q_SLOTS:
-    void slotActionSelected( QAction* );
-    void slotGoStopToggled( bool );
+    void slotActionSelected();
+    void slotGoStopToggled(bool);
     void slotEditCommentClicked();
     void slotManuallySelectTask();
 
 protected:
-    void showEvent( QShowEvent* ) override;
+    void showEvent(QShowEvent *) override;
 
 private:
     void updateThumbBar();
-    void taskSelected( TaskId id );
-    QToolButton* m_stopGoButton;
-    QAction* m_stopGoAction;
-    QToolButton* m_editCommentButton;
-    QAction* m_editCommentAction;
-    QToolButton* m_taskSelectorButton;
-    QAction* m_startOtherTaskAction;
+    void taskSelected(TaskId id);
+    QToolButton *m_stopGoButton;
+    QAction *m_stopGoAction;
+    QToolButton *m_editCommentButton;
+    QAction *m_editCommentAction;
+    QToolButton *m_taskSelectorButton;
+    QAction *m_startOtherTaskAction;
     QMenu *m_menu;
     /** The task that has been selected from the menu. */
     TaskId m_selectedTask = {};
@@ -88,7 +88,7 @@ private:
     bool m_taskManuallySelected = false;
 
 #ifdef Q_OS_WIN
-    QWinThumbnailToolButton* m_stopGoThumbButton = nullptr;
+    QWinThumbnailToolButton *m_stopGoThumbButton = nullptr;
 #endif
 };
 

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -31,15 +31,15 @@
 #include "Core/Event.h"
 
 namespace Ui {
-    class EventEditor;
+class EventEditor;
 }
 
-class EventEditor: public QDialog
+class EventEditor : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit EventEditor( const Event& event, QWidget* parent = nullptr );
+    explicit EventEditor(const Event &event, QWidget *parent = nullptr);
     ~EventEditor() override;
 
     // return the result after the dialog has been accepted
@@ -49,12 +49,12 @@ protected Q_SLOTS:
     void accept() override;
 
 private Q_SLOTS:
-    void durationHoursEdited( int );
-    void durationMinutesEdited( int );
-    void startDateChanged( const QDate& );
-    void startTimeChanged( const QTime& );
-    void endDateChanged( const QDate& );
-    void endTimeChanged( const QTime& );
+    void durationHoursEdited(int);
+    void durationMinutesEdited(int);
+    void startDateChanged(const QDate &);
+    void startTimeChanged(const QTime &);
+    void endDateChanged(const QDate &);
+    void endTimeChanged(const QTime &);
     void selectTaskClicked();
     void commentChanged();
     void startToNowButtonClicked();
@@ -62,7 +62,7 @@ private Q_SLOTS:
 
 private:
     void updateEndTime();
-    void updateValues( bool all = false );
+    void updateValues(bool all = false);
 
     QScopedPointer<Ui::EventEditor> m_ui;
     Event m_event;

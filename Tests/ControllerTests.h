@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -27,7 +27,7 @@
 #include <QObject>
 
 #include "Core/Configuration.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
 class ControllerTests : public QObject
 {
@@ -37,16 +37,16 @@ public:
     ControllerTests();
 
 public Q_SLOTS: // not test cases
-    void slotCurrentEvents( const EventList& );
+    void slotCurrentEvents(const EventList &);
 
-    void slotDefinedTasks( const TaskList& );
+    void slotDefinedTasks(const TaskList &);
 
-    void slotTaskAdded( const Task& );
-    void slotTaskUpdated( const Task& );
-    void slotTaskDeleted( const Task& );
+    void slotTaskAdded(const Task &);
+    void slotTaskUpdated(const Task &);
+    void slotTaskDeleted(const Task &);
 
 private Q_SLOTS:
-    void initTestCase ();
+    void initTestCase();
 
     void initializeConnectBackendTest();
 
@@ -65,11 +65,10 @@ private Q_SLOTS:
 
     void cleanupTestCase();
 
-
 private:
 
-    ControllerInterface* m_controller = nullptr;
-    Configuration& m_configuration;
+    Controller *m_controller = nullptr;
+    Configuration &m_configuration;
     QString m_localPath;
     EventList m_currentEvents;
     bool m_eventListReceived = false;

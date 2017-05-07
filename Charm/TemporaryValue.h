@@ -1,7 +1,7 @@
 /*
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2009-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2009-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -22,22 +22,22 @@
 #ifndef TEMPORARYVALUE_H
 #define TEMPORARYVALUE_H
 
-template <typename T>
+template<typename T>
 struct TemporaryValue {
-    explicit TemporaryValue(T& x, const T& value)
+    explicit TemporaryValue(T &x, const T &value)
         : m_x(x)
         , m_oldValue(x)
     {
         m_x = value;
     }
 
-    ~TemporaryValue() {
+    ~TemporaryValue()
+    {
         m_x = m_oldValue;
     }
 
-    T& m_x;
+    T &m_x;
     const T m_oldValue;
 };
 
 #endif
-

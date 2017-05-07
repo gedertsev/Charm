@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2015-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2015-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Michel Boyer de la Giroday <michel.giroday@kdab.com>
 
@@ -28,28 +28,29 @@
 #include <QDesktopWidget>
 #include <QTimer>
 
-NotificationPopup::NotificationPopup( QWidget* parent )
-    : QDialog( parent )
-    ,m_ui( new Ui::NotificationPopup )
+NotificationPopup::NotificationPopup(QWidget *parent)
+    : QDialog(parent)
+    , m_ui(new Ui::NotificationPopup)
 {
-    m_ui->setupUi( this );
+    m_ui->setupUi(this);
 
-    setAttribute( Qt::WA_ShowWithoutActivating );
-    setWindowFlags( Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint );
+    setAttribute(Qt::WA_ShowWithoutActivating);
+    setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 }
 
 NotificationPopup::~NotificationPopup()
 {
 }
 
-void NotificationPopup::showNotification( const QString& title, const QString& message )
+void NotificationPopup::showNotification(const QString &title, const QString &message)
 {
     QString titleText = m_ui->titleLB->text();
-    m_ui->titleLB->setText( titleText.replace( QLatin1String("TITLE"), title ) );
+    m_ui->titleLB->setText(titleText.replace(QLatin1String("TITLE"), title));
     QString messageText = m_ui->messageLB->text();
-    m_ui->messageLB->setText( messageText.replace( QLatin1String("MESSAGE"), message ) );
+    m_ui->messageLB->setText(messageText.replace(QLatin1String("MESSAGE"), message));
 
-    setGeometry( QStyle::alignedRect ( Qt::RightToLeft, Qt::AlignBottom, size(), qApp->desktop()->availableGeometry() ) );
+    setGeometry(QStyle::alignedRect(Qt::RightToLeft, Qt::AlignBottom, size(),
+                                    qApp->desktop()->availableGeometry()));
     show();
     QTimer::singleShot(10000, this, SLOT(slotCloseNotification()));
 }
@@ -59,9 +60,7 @@ void NotificationPopup::slotCloseNotification()
     close();
 }
 
-void NotificationPopup::mousePressEvent( QMouseEvent* )
+void NotificationPopup::mousePressEvent(QMouseEvent *)
 {
     close();
 }
-
-#include "moc_NotificationPopup.cpp"

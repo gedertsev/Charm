@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -27,7 +27,7 @@
 #include <QObject>
 
 #include "Core/Configuration.h"
-#include "Core/StorageInterface.h"
+#include "Core/SqlStorage.h"
 
 class SqLiteStorageTests : public QObject
 {
@@ -37,12 +37,12 @@ public:
     ~SqLiteStorageTests() override;
 
 private:
-    StorageInterface* m_storage;
+    SqlStorage *m_storage;
     Configuration m_configuration;
     QString m_localPath;
 
 private Q_SLOTS:
-    void initTestCase ();
+    void initTestCase();
 
     void connectAndCreateDatabaseTest();
 

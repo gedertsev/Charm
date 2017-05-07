@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -29,10 +29,9 @@
 class CommandLine
 {
 public:
-    CommandLine(int argc, char** argv);
+    CommandLine(int argc, char **argv);
     CommandLine(const QString file, const int userId);
     CommandLine(const int userId, const int index);
-
 
     enum Mode {
         Mode_None,

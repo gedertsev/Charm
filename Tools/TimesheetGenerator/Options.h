@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2009-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2009-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -28,19 +28,18 @@
 #include <QDate>
 
 namespace TimesheetGenerator {
+class Options
+{
+public:
+    explicit Options(int argc, char **argv);
 
-    class Options {
-    public:
-        explicit Options( int argc, char** argv );
+    QString file() const;
+    QDate date() const;
 
-        QString file() const;
-        QDate date() const;
-
-    private:
-        QString mFile;
-        QDate mDate;
-    };
-
+private:
+    QString mFile;
+    QDate mDate;
+};
 }
 
 #endif

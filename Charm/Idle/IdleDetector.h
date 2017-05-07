@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -41,14 +41,15 @@ class IdleDetector : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool available READ available NOTIFY availableChanged)
-    Q_PROPERTY(int idlenessDuration READ idlenessDuration WRITE setIdlenessDuration NOTIFY idlenessDurationChanged)
+    Q_PROPERTY(
+        int idlenessDuration READ idlenessDuration WRITE setIdlenessDuration NOTIFY idlenessDurationChanged)
 
 public:
     typedef QPair<QDateTime, QDateTime> IdlePeriod;
     typedef QVector<IdlePeriod> IdlePeriods;
 
     /** Create an idle detector for this platform. */
-    static IdleDetector* createIdleDetector( QObject* parent );
+    static IdleDetector *createIdleDetector(QObject *parent);
 
     /** Returns the idle periods. */
     IdlePeriods idlePeriods() const;
@@ -61,24 +62,26 @@ public:
      * @return the duration in seconds
      */
     int idlenessDuration() const;
-    void setIdlenessDuration( int seconds );
+    void setIdlenessDuration(int seconds);
 
     /**
      * Returns whether idle detection is available
      */
     bool available() const;
 
-
 Q_SIGNALS:
     void maybeIdle();
-    void idlenessDurationChanged( int idlenessDuration );
-    void availableChanged( bool available );
+    void idlenessDurationChanged(int idlenessDuration);
+    void availableChanged(bool available);
 
 protected:
-    virtual void onIdlenessDurationChanged() {}
-    explicit IdleDetector( QObject* parent = nullptr );
-    void maybeIdle( IdlePeriod period );
-    void setAvailable( bool available );
+    virtual void onIdlenessDurationChanged()
+    {
+    }
+
+    explicit IdleDetector(QObject *parent = nullptr);
+    void maybeIdle(IdlePeriod period);
+    void setAvailable(bool available);
 
 private:
     IdlePeriods m_idlePeriods;

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -23,12 +23,12 @@
 
 #include "CommandAddTask.h"
 
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 #include "Core/CommandEmitterInterface.h"
 
-CommandAddTask::CommandAddTask( const Task& task, QObject* parent )
-    : CharmCommand( tr("Add Task"), parent )
-    , m_task( task )
+CommandAddTask::CommandAddTask(const Task &task, QObject *parent)
+    : CharmCommand(tr("Add Task"), parent)
+    , m_task(task)
 {
 }
 
@@ -41,18 +41,15 @@ bool CommandAddTask::prepare()
     return true;
 }
 
-bool CommandAddTask::execute( ControllerInterface* controller )
+bool CommandAddTask::execute(Controller *controller)
 {
-    m_success = controller->addTask( m_task );
+    m_success = controller->addTask(m_task);
     return m_success;
 }
 
 bool CommandAddTask::finalize()
 {
-    if ( !m_success ) {
-        showInformation( tr( "Unable to add task" ), tr( "Adding the task failed." ) );
-    }
+    if (!m_success)
+        showInformation(tr("Unable to add task"), tr("Adding the task failed."));
     return m_success;
 }
-
-#include "moc_CommandAddTask.cpp"

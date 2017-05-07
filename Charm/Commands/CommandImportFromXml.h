@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -32,11 +32,11 @@ class CommandImportFromXml : public CharmCommand
 {
     Q_OBJECT
 public:
-    explicit CommandImportFromXml( QString filename, QObject* parent );
+    explicit CommandImportFromXml(QString filename, QObject *parent);
     ~CommandImportFromXml() override;
 
     bool prepare() override;
-    bool execute( ControllerInterface* ) override;
+    bool execute(Controller *) override;
     bool finalize() override;
 
 private:

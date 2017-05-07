@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -29,8 +29,10 @@
 class Installation
 {
 public:
-    Installation() : m_id(), m_userId()
-    {}
+    Installation() : m_id()
+        , m_userId()
+    {
+    }
 
     bool isValid() const
     {
@@ -42,7 +44,7 @@ public:
         return m_id;
     }
 
-    void setId( int newid )
+    void setId(int newid)
     {
         m_id = newid;
     }
@@ -52,7 +54,7 @@ public:
         return m_userId;
     }
 
-    void setUserId( int userId )
+    void setUserId(int userId)
     {
         m_userId = userId;
     }
@@ -62,7 +64,7 @@ public:
         return m_name;
     }
 
-    void setName( const QString& newname )
+    void setName(const QString &newname)
     {
         m_name = newname;
     }

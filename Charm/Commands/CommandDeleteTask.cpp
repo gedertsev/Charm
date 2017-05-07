@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -26,11 +26,11 @@
 #include "ViewHelpers.h"
 
 #include "Core/CharmConstants.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
-CommandDeleteTask::CommandDeleteTask( const Task& task, QObject* parent )
-    : CharmCommand( tr("Delete Task"), parent )
-    , m_task( task )
+CommandDeleteTask::CommandDeleteTask(const Task &task, QObject *parent)
+    : CharmCommand(tr("Delete Task"), parent)
+    , m_task(task)
 {
 }
 
@@ -43,18 +43,15 @@ bool CommandDeleteTask::prepare()
     return true;
 }
 
-bool CommandDeleteTask::execute( ControllerInterface* controller )
+bool CommandDeleteTask::execute(Controller *controller)
 {
-    m_success = controller->deleteTask( m_task );
+    m_success = controller->deleteTask(m_task);
     return m_success;
 }
 
 bool CommandDeleteTask::finalize()
 {
-    if ( !m_success ) {
-        showInformation( tr( "Unable to delete task" ), tr( "Deleting the task failed" ) );
-    }
+    if (!m_success)
+        showInformation(tr("Unable to delete task"), tr("Deleting the task failed"));
     return m_success;
 }
-
-#include "moc_CommandDeleteTask.cpp"

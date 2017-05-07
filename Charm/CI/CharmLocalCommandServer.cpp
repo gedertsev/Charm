@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2015-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2015-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Guillermo A. Amaral <gamaral@kdab.com>
 
@@ -35,7 +35,7 @@
 #error Build system error: CHARM_CI_LOCALSERVER should be defined
 #endif
 
-CharmLocalCommandServer::CharmLocalCommandServer(QObject* parent)
+CharmLocalCommandServer::CharmLocalCommandServer(QObject *parent)
     : CharmCommandServer(parent)
     , m_server(new QLocalServer(this))
 {
@@ -47,7 +47,7 @@ CharmLocalCommandServer::~CharmLocalCommandServer()
 
 bool CharmLocalCommandServer::listen()
 {
-    const QString name(QDir::tempPath() + '/' + "charm.sock");
+    const QString name(QDir::tempPath().append(QStringLiteral("/charm.sock")));
 
 #ifdef Q_OS_UNIX
     QFile::remove(name); // Try to clean up stale socket if possible
@@ -71,11 +71,10 @@ void CharmLocalCommandServer::close()
 void CharmLocalCommandServer::onNewConnection()
 {
     while (m_server->hasPendingConnections()) {
-        QLocalSocket* conn = m_server->nextPendingConnection();
+        QLocalSocket *conn = m_server->nextPendingConnection();
         Q_ASSERT(conn);
 
         qDebug("New Local connection, creating command session...");
         spawnSession(conn);
     }
 }
-

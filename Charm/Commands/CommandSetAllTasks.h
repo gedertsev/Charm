@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -32,11 +32,11 @@ class CommandSetAllTasks : public CharmCommand
     Q_OBJECT
 
 public:
-    explicit CommandSetAllTasks( const TaskList&, QObject* parent );
+    explicit CommandSetAllTasks(const TaskList &, QObject *parent);
     ~CommandSetAllTasks() override;
 
     bool prepare() override;
-    bool execute( ControllerInterface* ) override;
+    bool execute(Controller *) override;
     bool finalize() override;
 
 private:

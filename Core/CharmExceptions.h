@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -29,41 +29,44 @@
 class CharmException
 {
 public:
-    explicit CharmException( const QString& message );
+    explicit CharmException(const QString &message);
     QString what() const throw();
 private:
     QString m_message;
 };
 
-class ParseError : public CharmException {
+class ParseError : public CharmException
+{
 public:
-    explicit ParseError( const QString& text );
+    explicit ParseError(const QString &text);
 };
 
 class XmlSerializationException : public CharmException
 {
 public:
-    explicit XmlSerializationException( const QString& message );
+    explicit XmlSerializationException(const QString &message);
 };
 
 class UnsupportedDatabaseVersionException : public CharmException
 {
 public:
-    explicit UnsupportedDatabaseVersionException( const QString& message );
+    explicit UnsupportedDatabaseVersionException(const QString &message);
 };
 
 class InvalidTaskListException : public CharmException
 {
 public:
-    explicit InvalidTaskListException( const QString& message );
+    explicit InvalidTaskListException(const QString &message);
 };
 
-class TransactionException : public CharmException {
+class TransactionException : public CharmException
+{
 public:
-    explicit TransactionException( const QString& text = QString() );
+    explicit TransactionException(const QString &text = QString());
 };
 
-class AlreadyRunningException : public CharmException {
+class AlreadyRunningException : public CharmException
+{
 public:
     explicit AlreadyRunningException();
 };

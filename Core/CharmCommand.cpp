@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -27,17 +27,17 @@
 
 #include <QMessageBox>
 
-CharmCommand::CharmCommand( const QString& description, QObject *parent )
-    : QObject( parent ),
-      m_description(description)
+CharmCommand::CharmCommand(const QString &description, QObject *parent)
+    : QObject(parent)
+    , m_description(description)
 {
-    CommandEmitterInterface* emitter = dynamic_cast<CommandEmitterInterface*>( parent );
-    if ( emitter ) {
+    CommandEmitterInterface *emitter = dynamic_cast<CommandEmitterInterface *>(parent);
+    if (emitter) {
         m_owner = emitter;
     } else {
-        Q_ASSERT_X( false, Q_FUNC_INFO,
-                    "CharmCommand widget pointers have to implement the "
-                    "CommandEmitterInterface." );
+        Q_ASSERT_X(false, Q_FUNC_INFO,
+                   "CharmCommand widget pointers have to implement the "
+                   "CommandEmitterInterface.");
     }
 }
 
@@ -50,12 +50,12 @@ QString CharmCommand::description() const
     return m_description;
 }
 
-bool CharmCommand::rollback(ControllerInterface *)
+bool CharmCommand::rollback(Controller *)
 {
     return false;
 }
 
-CommandEmitterInterface* CharmCommand::owner() const
+CommandEmitterInterface *CharmCommand::owner() const
 {
     return m_owner;
 }
@@ -72,21 +72,19 @@ void CharmCommand::requestRollback()
 
 void CharmCommand::requestSlotEventIdChanged(int oldId, int newId)
 {
-    Q_EMIT emitSlotEventIdChanged(oldId,newId);
+    Q_EMIT emitSlotEventIdChanged(oldId, newId);
 }
 
-void CharmCommand::showInformation(const QString& title, const QString& message)
+void CharmCommand::showInformation(const QString &title, const QString &message)
 {
-    QWidget* parent = dynamic_cast<QWidget*>( owner() );
-    Q_ASSERT( parent );
-    QMessageBox::information( parent, title, message );
+    QWidget *parent = dynamic_cast<QWidget *>(owner());
+    Q_ASSERT(parent);
+    QMessageBox::information(parent, title, message);
 }
 
-void CharmCommand::showCritical(const QString& title, const QString& message)
+void CharmCommand::showCritical(const QString &title, const QString &message)
 {
-    QWidget* parent = dynamic_cast<QWidget*>( owner() );
-    Q_ASSERT( parent );
-    QMessageBox::critical( parent, title, message );
+    QWidget *parent = dynamic_cast<QWidget *>(owner());
+    Q_ASSERT(parent);
+    QMessageBox::critical(parent, title, message);
 }
-
-#include "moc_CharmCommand.cpp"

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -26,18 +26,16 @@
 
 #include <CharmCMake.h>
 
-CharmAboutDialog::CharmAboutDialog( QWidget* parent )
-    : QDialog( parent )
-    , m_ui( new Ui::CharmAboutDialog )
+CharmAboutDialog::CharmAboutDialog(QWidget *parent)
+    : QDialog(parent)
+    , m_ui(new Ui::CharmAboutDialog)
 {
-    m_ui->setupUi( this );
+    m_ui->setupUi(this);
     QString versionText = m_ui->versionLabel->text();
-    versionText.replace( QLatin1String("CHARM_VERSION"), QStringLiteral(CHARM_VERSION) );
-    m_ui->versionLabel->setText( versionText );
+    versionText.replace(QLatin1String("CHARM_VERSION"), QStringLiteral(CHARM_VERSION));
+    m_ui->versionLabel->setText(versionText);
 }
 
 CharmAboutDialog::~CharmAboutDialog()
 {
 }
-
-#include "moc_CharmAboutDialog.cpp"

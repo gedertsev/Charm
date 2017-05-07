@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -36,18 +36,18 @@ class CommandRelayCommand : public CharmCommand
     Q_OBJECT
 
 public:
-    explicit CommandRelayCommand( QObject* parent );
+    explicit CommandRelayCommand(QObject *parent);
     ~CommandRelayCommand() override;
 
-    void setCommand( CharmCommand* command );
+    void setCommand(CharmCommand *command);
 
     bool prepare() override;
-    bool execute( ControllerInterface* ) override;
-    bool rollback( ControllerInterface* ) override;
+    bool execute(Controller *) override;
+    bool rollback(Controller *) override;
     bool finalize() override;
 
 private:
-    CharmCommand* m_payload = nullptr;
+    CharmCommand *m_payload = nullptr;
 };
 
 #endif

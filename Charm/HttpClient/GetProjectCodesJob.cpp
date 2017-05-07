@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2011-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2011-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -28,7 +28,7 @@
 #include <QNetworkRequest>
 #include <QSettings>
 
-GetProjectCodesJob::GetProjectCodesJob(QObject* parent)
+GetProjectCodesJob::GetProjectCodesJob(QObject *parent)
     : HttpJob(parent)
 {
     QSettings s;
@@ -79,12 +79,12 @@ QUrl GetProjectCodesJob::downloadUrl() const
     return m_downloadUrl;
 }
 
-void GetProjectCodesJob::setDownloadUrl(const QUrl& url)
+void GetProjectCodesJob::setDownloadUrl(const QUrl &url)
 {
     m_downloadUrl = url;
 }
 
-void GetProjectCodesJob::setVerbose( bool verbose )
+void GetProjectCodesJob::setVerbose(bool verbose)
 {
     m_verbose = verbose;
 }
@@ -93,5 +93,3 @@ bool GetProjectCodesJob::isVerbose() const
 {
     return m_verbose;
 }
-
-#include "moc_GetProjectCodesJob.cpp"

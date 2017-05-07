@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -30,7 +30,8 @@
 class QByteArray;
 class CharmDataModel;
 
-class MonthlyTimesheetXmlWriter {
+class MonthlyTimesheetXmlWriter
+{
 public:
     MonthlyTimesheetXmlWriter();
     /**
@@ -38,15 +39,15 @@ public:
      */
     QByteArray saveToXml() const;
 
-    void setDataModel( const CharmDataModel* dataModel );
-    void setYearOfMonth( int yearOfMonth );
-    void setMonthNumber( int monthNumber );
-    void setNumberOfWeeks( int numberOfWeeks );
-    void setEvents( const EventList& events );
-    void setRootTask( TaskId rootTask );
+    void setDataModel(const CharmDataModel *dataModel);
+    void setYearOfMonth(int yearOfMonth);
+    void setMonthNumber(int monthNumber);
+    void setNumberOfWeeks(int numberOfWeeks);
+    void setEvents(const EventList &events);
+    void setRootTask(TaskId rootTask);
 
 private:
-    const CharmDataModel* m_dataModel = nullptr;
+    const CharmDataModel *m_dataModel = nullptr;
     int m_yearOfMonth = 0;
     int m_monthNumber = 0;
     int m_numberOfWeeks = 0;

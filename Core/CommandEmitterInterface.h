@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -29,8 +29,11 @@ class CharmCommand;
 class CommandEmitterInterface
 {
 public:
-    virtual ~CommandEmitterInterface() {}
-    virtual void commitCommand( CharmCommand* ) = 0;
+    virtual ~CommandEmitterInterface()
+    {
+    }
+
+    virtual void commitCommand(CharmCommand *) = 0;
 };
 
 #endif

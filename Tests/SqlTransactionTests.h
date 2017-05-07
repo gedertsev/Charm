@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2010-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2010-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -47,6 +47,5 @@ private Q_SLOTS:
 private:
     MySqlStorage prepareMySqlStorage();
 };
-
 
 #endif // SQLTRANSACTIONTESTS_H

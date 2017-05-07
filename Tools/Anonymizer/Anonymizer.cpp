@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -26,20 +26,22 @@
 
 #include "Core/XmlSerialization.h"
 
-class AnonymizerException {
+class AnonymizerException
+{
 public:
-    explicit AnonymizerException( QString what )
-        : m_what( what ) {}
+    explicit AnonymizerException(QString what)
+        : m_what(what)
+    {
+    }
 
 private:
     QString m_what;
 };
 
-int main( int argc, char** argv ) {
-    QCoreApplication app( argc, argv );
+int main(int argc, char **argv)
+{
+    QCoreApplication app(argc, argv);
     try {
-        if ( argc != 2 )
-        QFileInfo fileInfo( argv[1] );
-
-}
-
+        if (argc != 2)
+            QFileInfo fileInfo(argv[1]);
+    }

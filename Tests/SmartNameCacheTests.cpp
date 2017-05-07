@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2012-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2012-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -26,30 +26,27 @@
 
 #include <QtTest/QtTest>
 
-
 void SmartNameCacheTests::testCache()
 {
     SmartNameCache cache;
-    Task projects( 1, QStringLiteral("Projects") );
-    Task charm( 2, QStringLiteral("Charm") );
-    charm.setParent( projects.id() );
-    Task charmDevelopment( 3, QStringLiteral("Development") );
-    charmDevelopment.setParent( charm.id() );
-    Task charmOverhead( 4, QStringLiteral("Overhead") );
-    charmOverhead.setParent( charm.id() );
-    Task lotsofcake( 5, QStringLiteral("Lotsofcake") );
-    lotsofcake.setParent( projects.id() );
-    Task lotsofcakeDevelopment( 6, QStringLiteral("Development") );
-    lotsofcakeDevelopment.setParent( lotsofcake.id() );
-    const TaskList tasks = TaskList() << projects << charm << charmDevelopment << charmOverhead << lotsofcake << lotsofcakeDevelopment;
-    cache.setAllTasks( tasks );
-    QCOMPARE( cache.smartName( charmDevelopment.id() ), QLatin1String("Charm/Development") );
-    QCOMPARE( cache.smartName( charmOverhead.id() ), QLatin1String("Charm/Overhead") );
-    QCOMPARE( cache.smartName( projects.id() ), QLatin1String("Projects") );
-    QCOMPARE( cache.smartName( lotsofcakeDevelopment.id() ), QLatin1String("Lotsofcake/Development") );
+    Task projects(1, QStringLiteral("Projects"));
+    Task charm(2, QStringLiteral("Charm"));
+    charm.setParent(projects.id());
+    Task charmDevelopment(3, QStringLiteral("Development"));
+    charmDevelopment.setParent(charm.id());
+    Task charmOverhead(4, QStringLiteral("Overhead"));
+    charmOverhead.setParent(charm.id());
+    Task lotsofcake(5, QStringLiteral("Lotsofcake"));
+    lotsofcake.setParent(projects.id());
+    Task lotsofcakeDevelopment(6, QStringLiteral("Development"));
+    lotsofcakeDevelopment.setParent(lotsofcake.id());
+    const TaskList tasks = TaskList() << projects << charm << charmDevelopment << charmOverhead
+                                      << lotsofcake << lotsofcakeDevelopment;
+    cache.setAllTasks(tasks);
+    QCOMPARE(cache.smartName(charmDevelopment.id()), QLatin1String("Charm/Development"));
+    QCOMPARE(cache.smartName(charmOverhead.id()), QLatin1String("Charm/Overhead"));
+    QCOMPARE(cache.smartName(projects.id()), QLatin1String("Projects"));
+    QCOMPARE(cache.smartName(lotsofcakeDevelopment.id()), QLatin1String("Lotsofcake/Development"));
 }
 
-
-QTEST_MAIN( SmartNameCacheTests )
-
-#include "moc_SmartNameCacheTests.cpp"
+QTEST_MAIN(SmartNameCacheTests)

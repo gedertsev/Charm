@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -26,14 +26,13 @@
 
 #include "Core/CharmDataModel.h"
 #include "Core/CommandEmitterInterface.h"
-#include "Core/ControllerInterface.h"
+#include "Core/Controller.h"
 
 #include <QDateTime>
 
-CommandMakeAndActivateEvent::CommandMakeAndActivateEvent( const Task& task,
-                                                          QObject* parent )
-    : CharmCommand( tr("Create Event"), parent )
-    , m_task( task )
+CommandMakeAndActivateEvent::CommandMakeAndActivateEvent(const Task &task, QObject *parent)
+    : CharmCommand(tr("Create Event"), parent)
+    , m_task(task)
 {
 }
 
@@ -46,13 +45,13 @@ bool CommandMakeAndActivateEvent::prepare()
     return true;
 }
 
-bool CommandMakeAndActivateEvent::execute( ControllerInterface* controller )
+bool CommandMakeAndActivateEvent::execute(Controller *controller)
 {
-    m_event = controller->makeEvent( m_task );
-    if ( m_event.isValid() ) {
-        m_event.setTaskId( m_task.id() );
-        m_event.setStartDateTime( QDateTime::currentDateTime() );
-        return controller->modifyEvent( m_event );
+    m_event = controller->makeEvent(m_task);
+    if (m_event.isValid()) {
+        m_event.setTaskId(m_task.id());
+        m_event.setStartDateTime(QDateTime::currentDateTime());
+        return controller->modifyEvent(m_event);
     } else {
         return false;
     }
@@ -60,14 +59,12 @@ bool CommandMakeAndActivateEvent::execute( ControllerInterface* controller )
 
 bool CommandMakeAndActivateEvent::finalize()
 {
-    if ( m_event.isValid() ) {
-        ModelConnector* model = dynamic_cast<ModelConnector*>( owner() );
-        Q_ASSERT( model ); // this command is "owned" by the model
-        model->charmDataModel()->activateEvent( m_event );
+    if (m_event.isValid()) {
+        ModelConnector *model = dynamic_cast<ModelConnector *>(owner());
+        Q_ASSERT(model);   // this command is "owned" by the model
+        model->charmDataModel()->activateEvent(m_event);
         return true;
     } else {
         return false;
     }
 }
-
-#include "moc_CommandMakeAndActivateEvent.cpp"

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -33,7 +33,7 @@
 #include <QScopedPointer>
 
 namespace Ui {
-    class WeeklyTimesheetConfigurationDialog;
+class WeeklyTimesheetConfigurationDialog;
 }
 
 class HttpJob;
@@ -50,20 +50,20 @@ class WeeklyTimesheetConfigurationDialog : public ReportConfigurationDialog
     Q_OBJECT
 
 public:
-    explicit WeeklyTimesheetConfigurationDialog( QWidget* parent );
+    explicit WeeklyTimesheetConfigurationDialog(QWidget *parent);
     ~WeeklyTimesheetConfigurationDialog() override;
 
     void showReportPreviewDialog() override;
-    void showEvent( QShowEvent* ) override;
-    void setDefaultWeek( int yearOfWeek, int week );
+    void showEvent(QShowEvent *) override;
+    void setDefaultWeek(int yearOfWeek, int week);
 
 public Q_SLOTS:
     void accept() override;
 
 private Q_SLOTS:
-    void slotCheckboxSubtasksOnlyChecked( bool );
+    void slotCheckboxSubtasksOnlyChecked(bool);
     void slotStandardTimeSpansChanged();
-    void slotWeekComboItemSelected( int );
+    void slotWeekComboItemSelected(int);
     void slotSelectTask();
 
 private:
@@ -77,18 +77,16 @@ class WeeklyTimeSheetReport : public TimeSheetReport
     Q_OBJECT
 
 public:
-    explicit WeeklyTimeSheetReport( QWidget* parent = nullptr );
+    explicit WeeklyTimeSheetReport(QWidget *parent = nullptr);
     ~WeeklyTimeSheetReport() override;
 
-    void setReportProperties( const QDate& start,
-                              const QDate& end,
-                              TaskId rootTask,
-                              bool activeTasksOnly ) override;
+    void setReportProperties(const QDate &start, const QDate &end, TaskId rootTask,
+                             bool activeTasksOnly) override;
 
 private Q_SLOTS:
     void slotUploadTimesheet();
-    void slotTimesheetUploaded( HttpJob* );
-    void slotLinkClicked( const QUrl& which );
+    void slotTimesheetUploaded(HttpJob *);
+    void slotLinkClicked(const QUrl &which);
 
 private:
     QString suggestedFileName() const override;

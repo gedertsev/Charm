@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
@@ -32,25 +32,25 @@
 #include <QScopedPointer>
 
 namespace Ui {
-    class TaskEditor;
+class TaskEditor;
 }
 
-class TaskEditor: public QDialog
+class TaskEditor : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit TaskEditor( QWidget* parent = nullptr );
+    explicit TaskEditor(QWidget *parent = nullptr);
     ~TaskEditor() override;
 
-    void setTask( const Task& task );
+    void setTask(const Task &task);
 
     Task getTask() const;
 
 private Q_SLOTS:
     void slotSelectParent();
-    void slotDateChanged( const QDate & date );
-    void slotCheckBoxChecked( bool );
+    void slotDateChanged(const QDate &date);
+    void slotCheckBoxChecked(bool);
 
 private:
     void checkInvariants();

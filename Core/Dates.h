@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2010-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2010-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
   Author: Olivier JG <olivier.de.gaalon@kdab.com>
@@ -28,15 +28,15 @@
 #include <QDate>
 
 namespace Charm {
-    QDate dateByWeekNumberAndWeekDay( int year, int week, int weekday );
-    /**
-     * returns the date for a week day @p dayOfWeek, in the week of date @p date.
-     */
-    QDate weekDayInWeekOf( Qt::DayOfWeek dayOfWeek, const QDate& date );
+QDate dateByWeekNumberAndWeekDay(int year, int week, int weekday);
+/**
+ * returns the date for a week day @p dayOfWeek, in the week of date @p date.
+ */
+QDate weekDayInWeekOf(Qt::DayOfWeek dayOfWeek, const QDate &date);
 
-    int numberOfWeeksInYear( int year );
+int numberOfWeeksInYear(int year);
 
-    int weekDifference( const QDate &from, const QDate &to );
+int weekDifference(const QDate &from, const QDate &to);
 }
 
 #endif // CHARM_DATES_H

@@ -23,11 +23,11 @@ endif()
 #    CharmCommand.cpp
 #    SmartNameCache.cpp
 #    XmlSerialization.cpp
+#    CharmQtCompat.cpp
 #)
 
 include(CMakeLists_Files.txt)
 SET(CharmCore_SRCS ${SOURCES})
-
 
 ADD_LIBRARY( CharmCore STATIC ${CharmCore_SRCS} )
 

@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2011-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2011-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Michel Boyer de la Giroday <michel.giroday@kdab.com>
 
@@ -32,7 +32,7 @@ class QNetworkReply;
 class QUrl;
 
 namespace Charm {
-    bool versionLessThan( const QString& lhs, const QString& rhs );
+bool versionLessThan(const QString &lhs, const QString &rhs);
 }
 
 class CheckForUpdatesJob : public QObject
@@ -49,21 +49,21 @@ public:
         bool verbose = false; // display error message or not ( default == not )
     };
 
-    explicit CheckForUpdatesJob( QObject* parent=nullptr );
+    explicit CheckForUpdatesJob(QObject *parent = nullptr);
     ~CheckForUpdatesJob() override;
 
     void start();
-    void setUrl( const QUrl& url );
-    void setVerbose( bool verbose );
+    void setUrl(const QUrl &url);
+    void setVerbose(bool verbose);
 
 Q_SIGNALS:
-    void finished( CheckForUpdatesJob::JobData data );
+    void finished(CheckForUpdatesJob::JobData data);
 
 private Q_SLOTS:
-    void jobFinished( QNetworkReply* reply );
+    void jobFinished(QNetworkReply *reply);
 
 private:
-    void parseXmlData( const QByteArray& data );
+    void parseXmlData(const QByteArray &data);
 
     QUrl m_url;
     JobData m_jobData;

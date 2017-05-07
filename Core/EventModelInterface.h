@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -21,7 +21,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #ifndef EVENTMODELINTERFACE_H
 #define EVENTMODELINTERFACE_H
 
@@ -31,10 +30,12 @@ class QModelIndex;
 class EventModelInterface
 {
 public:
-    virtual ~EventModelInterface() {}
+    virtual ~EventModelInterface()
+    {
+    }
 
-    virtual const Event& eventForIndex( const QModelIndex& ) const = 0;
-    virtual QModelIndex indexForEvent( const Event& ) const = 0;
+    virtual const Event &eventForIndex(const QModelIndex &) const = 0;
+    virtual QModelIndex indexForEvent(const Event &) const = 0;
 };
 
 #endif

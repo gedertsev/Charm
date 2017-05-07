@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -24,25 +24,26 @@
 #ifndef MAKETEMPORARILYVISIBLE_H
 #define MAKETEMPORARILYVISIBLE_H
 
-class MakeTemporarilyVisible {
+class MakeTemporarilyVisible
+{
 public:
-    explicit MakeTemporarilyVisible( QWidget* widget )
-        : m_widget( widget )
+    explicit MakeTemporarilyVisible(QWidget *widget)
+        : m_widget(widget)
     {
-        Q_ASSERT( m_widget );
+        Q_ASSERT(m_widget);
         m_wasVisible = m_widget->isVisible();
-        if ( ! m_wasVisible ) {
+        if (!m_wasVisible)
             m_widget->show();
-        }
     }
 
-    ~MakeTemporarilyVisible() {
-        if ( ! m_wasVisible ) {
+    ~MakeTemporarilyVisible()
+    {
+        if (!m_wasVisible)
             m_widget->hide();
-        }
     }
+
 private:
-    QWidget* m_widget = {};
+    QWidget *m_widget = {};
     bool m_wasVisible = false;
 };
 

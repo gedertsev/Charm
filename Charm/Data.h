@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2007-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2007-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
   Author: Mike McQuaid <mike.mcquaid@kdab.com>
@@ -28,32 +28,33 @@
 class QIcon;
 class QPixmap;
 
-class Data {
+class Data
+{
 public:
-    static const QIcon& charmIcon();
-    static const QIcon& charmTrayIcon();
-    static const QIcon& charmTrayActiveIcon();
+    static const QIcon &charmIcon();
+    static const QIcon &charmTrayIcon();
+    static const QIcon &charmTrayActiveIcon();
 
-    static const QIcon& goIcon();
-    static const QIcon& stopIcon();
-    static const QIcon& newTaskIcon();
-    static const QIcon& newSubtaskIcon();
-    static const QIcon& editTaskIcon();
-    static const QIcon& deleteTaskIcon();
-    static const QIcon& editEventIcon();
-    static const QIcon& searchIcon();
-    static const QIcon& previousEventIcon();
-    static const QIcon& nextEventIcon();
-    static const QIcon& createReportIcon();
-    static const QPixmap& checkIcon();
-    static const QPixmap& activePixmap();
-    static const QIcon& quitCharmIcon();
-    static const QIcon& clearFilterIcon();
-    static const QIcon& configureIcon();
-    static const QPixmap& editorLockedPixmap();
-    static const QPixmap& editorDirtyPixmap();
-    static const QPixmap& recorderStopIcon();
-    static const QPixmap& recorderGoIcon();
+    static const QIcon &goIcon();
+    static const QIcon &stopIcon();
+    static const QIcon &newTaskIcon();
+    static const QIcon &newSubtaskIcon();
+    static const QIcon &editTaskIcon();
+    static const QIcon &deleteTaskIcon();
+    static const QIcon &editEventIcon();
+    static const QIcon &searchIcon();
+    static const QIcon &previousEventIcon();
+    static const QIcon &nextEventIcon();
+    static const QIcon &createReportIcon();
+    static const QPixmap &checkIcon();
+    static const QPixmap &activePixmap();
+    static const QIcon &quitCharmIcon();
+    static const QIcon &clearFilterIcon();
+    static const QIcon &configureIcon();
+    static const QPixmap &editorLockedPixmap();
+    static const QPixmap &editorDirtyPixmap();
+    static const QPixmap &recorderStopIcon();
+    static const QPixmap &recorderGoIcon();
 };
 
 #endif

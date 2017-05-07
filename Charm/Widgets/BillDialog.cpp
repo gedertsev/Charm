@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2014-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2014-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
@@ -26,7 +26,7 @@
 #include <QPushButton>
 #include <QDialogButtonBox>
 
-BillDialog::BillDialog( QWidget* parent, Qt::WindowFlags f )
+BillDialog::BillDialog(QWidget *parent, Qt::WindowFlags f)
     : QDialog(parent, f)
 {
     setResult(Later);
@@ -86,5 +86,3 @@ void BillDialog::slotLater()
 {
     done(Later);
 }
-
-#include "moc_BillDialog.cpp"

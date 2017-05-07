@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2009-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2009-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Mirko Boehm <mirko.boehm@kdab.com>
 
@@ -28,32 +28,35 @@
 #include <QString>
 
 namespace TimesheetGenerator {
-
-    class Exception : public std::exception
+class Exception : public std::exception
+{
+public:
+    explicit Exception(const QString &text = QString())
+        : mWhat(text)
     {
-    public:
-        explicit Exception( const QString& text = QString() )
-            : mWhat( text )
-        {}
+    }
 
-        ~Exception() throw()
-        {}
-
-        const char* what() const throw() {
-            return qPrintable( mWhat );
-        }
-    private:
-        QString mWhat;
-    };
-
-    class UsageException : public Exception
+    ~Exception() throw()
     {
-    public:
-        explicit UsageException( const QString& text = QString() )
-            : Exception( text )
-        {}
-    };
+    }
 
+    const char *what() const throw()
+    {
+        return qPrintable(mWhat);
+    }
+
+private:
+    QString mWhat;
+};
+
+class UsageException : public Exception
+{
+public:
+    explicit UsageException(const QString &text = QString())
+        : Exception(text)
+    {
+    }
+};
 }
 
 #endif

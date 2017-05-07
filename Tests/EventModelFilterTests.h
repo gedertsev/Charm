@@ -3,7 +3,7 @@
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2012-2016 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2012-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
   Author: Michel Boyer de la Giroday <michel.giroday@kdab.com>
 
@@ -48,8 +48,8 @@ private Q_SLOTS:
     void checkEventSpanOver2Days();
 
 private:
-    CharmDataModel* m_referenceModel = nullptr;
-    EventModelFilter* m_eventModelFilter;
+    CharmDataModel *m_referenceModel = nullptr;
+    EventModelFilter *m_eventModelFilter;
 
     NamedTimeSpan m_thisYearSpan;
     NamedTimeSpan m_theMonthBeforeLastSpan;
@@ -65,4 +65,3 @@ private:
 };
 
 #endif // EVENTMODELFILTERTESTS
-
