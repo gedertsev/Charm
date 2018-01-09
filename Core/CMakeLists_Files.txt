@@ -12,7 +12,6 @@ set(Files_h
 	Dates.h
 	Event.h
 	EventModelInterface.h
-	Installation.h
 	MySqlStorage.h
 	SmartNameCache.h
 	SqLiteStorage.h
