@@ -94,8 +94,16 @@ void Configuration::writeTo(QSettings &settings)
 bool Configuration::readFrom(QSettings &settings)
 {
     bool complete = true;
+    bool dirty = false;
     if (settings.contains(MetaKey_Key_InstallationId)) {
-        installationId = settings.value(MetaKey_Key_InstallationId).toInt();
+        bool ok;
+        installationId = settings.value(MetaKey_Key_InstallationId).toUInt(&ok);
+        if (!ok || installationId == 1) {
+            const auto newId = createInstallationId();
+            qDebug() << "Migrating installationId" << installationId << "to" << newId;
+            installationId = newId;
+            dirty = true;
+        }
     } else {
         complete = false;
     }
@@ -115,6 +123,9 @@ bool Configuration::readFrom(QSettings &settings)
         complete = false;
     }
     dump(QStringLiteral("(Configuration::readFrom loaded configuration)"));
+    if (dirty && complete) {
+        writeTo(settings);
+    }
     return complete;
 }
 
@@ -138,4 +149,10 @@ void Configuration::dump(const QString &why)
              << "--> warnUnuploadedTimesheets: " << warnUnuploadedTimesheets << endl
              << "--> requestEventComment:      " << requestEventComment << endl
              << "--> enableCommandInterface:   " << enableCommandInterface;
+}
+
+quint32 Configuration::createInstallationId() const
+{
+    qsrand(QDateTime::currentMSecsSinceEpoch());
+    return qrand() + 2;
 }

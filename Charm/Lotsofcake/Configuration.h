@@ -1,11 +1,10 @@
 /*
-  X11IdleDetector.h
+  Configuration.h
 
   This file is part of Charm, a task-based time tracking application.
 
-  Copyright (C) 2008-2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
+  Copyright (C) 2017 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com
 
-  Author: Jesper Pedersen <jesper.pedersen@kdab.com>
   Author: Frank Osterfeld <frank.osterfeld@kdab.com>
 
   This program is free software; you can redistribute it and/or modify
@@ -22,37 +21,40 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef X11IDLEDETECTOR_H
-#define X11IDLEDETECTOR_H
+#ifndef LOTSOFCAKE_CONFIGURATION_H
+#define LOTSOFCAKE_CONFIGURATION_H
 
-#include "IdleDetector.h"
+#include <QDate>
 
-#include <QTimer>
+class QString;
+class QUrl;
 
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
-#include <xcb/xcb.h>
-#endif
+class TaskExport;
 
-class X11IdleDetector : public IdleDetector
+namespace Lotsofcake {
+
+class Configuration
 {
-    Q_OBJECT
 public:
-    explicit X11IdleDetector(QObject *parent);
-    bool idleCheckPossible();
+    bool isConfigured() const;
 
-protected:
-    void onIdlenessDurationChanged() override;
+    void importFromTaskExport(const TaskExport &exporter);
 
-private Q_SLOTS:
-    void checkIdleness();
+    QDate lastStagedTimesheetUpload() const;
+    void setLastStagedTimesheetUpload(const QDate &date);
+
+    QString username() const;
+    QUrl timesheetUploadUrl() const;
+    QUrl projectCodeDownloadUrl() const;
+    QUrl restUrl() const;
 
 private:
-    QDateTime m_heartbeat;
-    QTimer m_timer;
-#if defined(Q_OS_UNIX) && !defined(Q_OS_OSX)
-    xcb_connection_t *m_connection;
-    xcb_screen_t *m_screen;
-#endif
+    mutable struct {
+        bool set = false;
+        QDate date;
+    } m_lastStagedTimesheetUpload;
 };
 
-#endif /* X11IDLEDETECTOR_H */
+}
+
+#endif

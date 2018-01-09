@@ -32,6 +32,10 @@ class UploadTimesheetJob : public HttpJob
 {
     Q_OBJECT
 public:
+    enum Status {
+        Unreviewed,
+        Staged
+    };
 
     explicit UploadTimesheetJob(QObject *parent = nullptr);
     ~UploadTimesheetJob() override;
@@ -43,18 +47,16 @@ public:
     QUrl uploadUrl() const;
     void setUploadUrl(const QUrl &url);
 
+    Status status() const;
+    void setStatus(Status status);
+
 public Q_SLOTS:
 
-    bool execute(int state, QNetworkAccessManager *manager) override;
-    bool handle(QNetworkReply *reply) override;
-
-protected:
-
-    enum State {
-        UploadTimesheet = HttpJob::Base
-    };
+    void executeRequest(QNetworkAccessManager *manager) override;
+    void handleResult();
 
 private:
+    Status m_status = Unreviewed;
     QByteArray m_payload;
     QString m_fileName;
     QUrl m_uploadUrl;

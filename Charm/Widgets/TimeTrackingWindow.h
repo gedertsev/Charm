@@ -90,6 +90,7 @@ public Q_SLOTS:
     void slotExportToXml();
     void slotImportFromXml();
     void slotSyncTasks(VerboseMode mode = Verbose);
+    void slotSyncTasksVerbose();
     void slotImportTasks();
     void slotExportTasks();
     void maybeIdle(IdleDetector *idleDetector);
@@ -122,6 +123,7 @@ Q_SIGNALS:
     void taskMenuChanged();
 
 private:
+    void uploadStagedTimesheet();
     void resetWeeklyTimesheetDialog();
     void resetMonthlyTimesheetDialog();
     void showPreview(ReportConfigurationDialog *, int result);
@@ -143,6 +145,7 @@ private:
     QTimer m_updateUserInfoAndTasksDefinitionsTimer;
     BillDialog *m_billDialog;
     bool m_idleCorrectionDialogVisible = false;
+    bool m_uploadingStagedTimesheet = false;
 };
 
 #endif

@@ -52,10 +52,14 @@
 #include "Core/XmlSerialization.h"
 
 #include "HttpClient/GetProjectCodesJob.h"
-#include "HttpClient/GetUserInfoJob.h"
+#include "HttpClient/RestJob.h"
+#include "HttpClient/UploadTimesheetJob.h"
 
 #include "Idle/IdleDetector.h"
 
+#include "Lotsofcake/Configuration.h"
+
+#include "Reports/WeeklyTimesheetXmlWriter.h"
 #include "Widgets/HttpJobProgressDialog.h"
 
 #include <QBuffer>
@@ -68,6 +72,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QToolBar>
+#include <QUrlQuery>
 #include <QtAlgorithms>
 
 #include <algorithm>
@@ -81,19 +86,20 @@ TimeTrackingWindow::TimeTrackingWindow(QWidget *parent)
     setWindowNumber(3);
     setWindowIdentifier(QStringLiteral("window_tracking"));
     setCentralWidget(m_summaryWidget);
-    connect(m_summaryWidget, SIGNAL(startEvent(TaskId)),
-            SLOT(slotStartEvent(TaskId)));
-    connect(m_summaryWidget, SIGNAL(stopEvents()),
-            SLOT(slotStopEvent()));
-    connect(m_summaryWidget, SIGNAL(taskMenuChanged()), SIGNAL(taskMenuChanged()));
-    connect(&m_checkUploadedSheetsTimer, SIGNAL(timeout()),
-            SLOT(slotCheckUploadedTimesheets()));
-    connect(m_billDialog, SIGNAL(finished(int)),
-            SLOT(slotBillGone(int)));
-    connect(&m_checkCharmReleaseVersionTimer, SIGNAL(timeout()),
-            SLOT(slotCheckForUpdatesAutomatic()));
-    connect(&m_updateUserInfoAndTasksDefinitionsTimer, SIGNAL(timeout()),
-            SLOT(slotGetUserInfo()));
+    connect(m_summaryWidget, &TimeTrackingView::startEvent,
+            this, &TimeTrackingWindow::slotStartEvent);
+    connect(m_summaryWidget, &TimeTrackingView::stopEvents,
+            this, &TimeTrackingWindow::slotStopEvent);
+    connect(m_summaryWidget, &TimeTrackingView::taskMenuChanged,
+            this, &TimeTrackingWindow::taskMenuChanged);
+    connect(&m_checkUploadedSheetsTimer, &QTimer::timeout,
+            this, &TimeTrackingWindow::slotCheckUploadedTimesheets);
+    connect(m_billDialog, &BillDialog::finished,
+            this, &TimeTrackingWindow::slotBillGone);
+    connect(&m_checkCharmReleaseVersionTimer, &QTimer::timeout,
+            this, &TimeTrackingWindow::slotCheckForUpdatesAutomatic);
+    connect(&m_updateUserInfoAndTasksDefinitionsTimer, &QTimer::timeout,
+            this, &TimeTrackingWindow::slotGetUserInfo);
 
     //Check every 60 minutes if there are timesheets due
     if (CONFIGURATION.warnUnuploadedTimesheets)
@@ -101,7 +107,7 @@ TimeTrackingWindow::TimeTrackingWindow(QWidget *parent)
     m_checkUploadedSheetsTimer.setInterval(60 * 60 * 1000);
 #if defined(Q_OS_OSX) || defined(Q_OS_WIN)
     m_checkCharmReleaseVersionTimer.setInterval(24 * 60 * 60 * 1000);
-    if (!QString::fromLatin1(UPDATE_CHECK_URL).isEmpty()) {
+    if (!CharmUpdateCheckUrl().isEmpty()) {
         QTimer::singleShot(1000, this, SLOT(slotCheckForUpdatesAutomatic()));
         m_checkCharmReleaseVersionTimer.start();
     }
@@ -142,8 +148,8 @@ void TimeTrackingWindow::stateChanged(State previous)
     CharmWindow::stateChanged(previous);
     switch (ApplicationCore::instance().state()) {
     case Connecting:
-        connect(ApplicationCore::instance().dateChangeWatcher(), SIGNAL(dateChanged()),
-                SLOT(slotSelectTasksToShow()));
+        connect(ApplicationCore::instance().dateChangeWatcher(), &DateChangeWatcher::dateChanged,
+                this, &TimeTrackingWindow::slotSelectTasksToShow);
         DATAMODEL->registerAdapter(this);
         m_summaryWidget->setSummaries(QVector<WeeklySummary>());
         m_summaryWidget->handleActiveEvents();
@@ -285,6 +291,7 @@ void TimeTrackingWindow::slotStartEvent(TaskId id)
 
     }
     ApplicationCore::instance().updateTaskList();
+    uploadStagedTimesheet();
 }
 
 void TimeTrackingWindow::slotStopEvent()
@@ -334,8 +341,8 @@ void TimeTrackingWindow::slotActivityReport()
     delete m_activityReportDialog;
     m_activityReportDialog = new ActivityReportConfigurationDialog(this);
     m_activityReportDialog->setAttribute(Qt::WA_DeleteOnClose);
-    connect(m_activityReportDialog, SIGNAL(finished(int)),
-            this, SLOT(slotActivityReportPreview(int)));
+    connect(m_activityReportDialog, &ActivityReportConfigurationDialog::finished,
+            this, &TimeTrackingWindow::slotActivityReportPreview);
     m_activityReportDialog->open();
 }
 
@@ -344,8 +351,8 @@ void TimeTrackingWindow::resetWeeklyTimesheetDialog()
     delete m_weeklyTimesheetDialog;
     m_weeklyTimesheetDialog = new WeeklyTimesheetConfigurationDialog(this);
     m_weeklyTimesheetDialog->setAttribute(Qt::WA_DeleteOnClose);
-    connect(m_weeklyTimesheetDialog, SIGNAL(finished(int)),
-            this, SLOT(slotWeeklyTimesheetPreview(int)));
+    connect(m_weeklyTimesheetDialog, &WeeklyTimesheetConfigurationDialog::finished,
+            this, &TimeTrackingWindow::slotWeeklyTimesheetPreview);
 }
 
 void TimeTrackingWindow::slotWeeklyTimesheetReport()
@@ -359,8 +366,8 @@ void TimeTrackingWindow::resetMonthlyTimesheetDialog()
     delete m_monthlyTimesheetDialog;
     m_monthlyTimesheetDialog = new MonthlyTimesheetConfigurationDialog(this);
     m_monthlyTimesheetDialog->setAttribute(Qt::WA_DeleteOnClose);
-    connect(m_monthlyTimesheetDialog, SIGNAL(finished(int)),
-            this, SLOT(slotMonthlyTimesheetPreview(int)));
+    connect(m_monthlyTimesheetDialog, &MonthlyTimesheetConfigurationDialog::finished,
+            this, &TimeTrackingWindow::slotMonthlyTimesheetPreview);
 }
 
 void TimeTrackingWindow::slotMonthlyTimesheetReport()
@@ -455,7 +462,12 @@ void TimeTrackingWindow::slotSyncTasks(VerboseMode mode)
 {
     if (ApplicationCore::instance().state() != Connected)
         return;
-    GetProjectCodesJob *client = new GetProjectCodesJob(this);
+    Lotsofcake::Configuration configuration;
+
+    auto client = new GetProjectCodesJob(this);
+    client->setUsername(configuration.username());
+    client->setDownloadUrl(configuration.projectCodeDownloadUrl());
+
     if (mode == Verbose) {
         HttpJobProgressDialog *dialog = new HttpJobProgressDialog(client, this);
         dialog->setWindowTitle(tr("Downloading"));
@@ -463,14 +475,19 @@ void TimeTrackingWindow::slotSyncTasks(VerboseMode mode)
         client->setVerbose(false);
     }
 
-    connect(client, SIGNAL(finished(HttpJob*)), this, SLOT(slotTasksDownloaded(HttpJob*)));
+    connect(client, &GetProjectCodesJob::finished,
+            this, &TimeTrackingWindow::slotTasksDownloaded);
     client->start();
+}
+
+void TimeTrackingWindow::slotSyncTasksVerbose()
+{
+    slotSyncTasks(Verbose);
 }
 
 void TimeTrackingWindow::slotSyncTasksAutomatic()
 {
-    // check if HttpJob is possible
-    if (HttpJob::credentialsAvailable() && !HttpJob::lastAuthenticationFailed())
+    if (Lotsofcake::Configuration().isConfigured())
         slotSyncTasks(Silent);
 }
 
@@ -584,10 +601,9 @@ void TimeTrackingWindow::slotCheckForUpdatesManual()
 void TimeTrackingWindow::startCheckForUpdates(VerboseMode mode)
 {
     CheckForUpdatesJob *checkForUpdates = new CheckForUpdatesJob(this);
-    connect(checkForUpdates, SIGNAL(finished(CheckForUpdatesJob::JobData)), this,
-            SLOT(slotCheckForUpdates(CheckForUpdatesJob::JobData)));
-    const QString urlString = QStringLiteral(UPDATE_CHECK_URL);
-    checkForUpdates->setUrl(QUrl(urlString));
+    connect(checkForUpdates, &CheckForUpdatesJob::finished,
+            this, &TimeTrackingWindow::slotCheckForUpdates);
+    checkForUpdates->setUrl(QUrl(CharmUpdateCheckUrl()));
     if (mode == Verbose)
         checkForUpdates->setVerbose(true);
     checkForUpdates->start();
@@ -609,7 +625,7 @@ void TimeTrackingWindow::slotCheckForUpdates(CheckForUpdatesJob::JobData data)
     if ((skipVersion == releaseVersion) && !data.verbose)
         return;
 
-    if (Charm::versionLessThan(QStringLiteral(CHARM_VERSION), releaseVersion)) {
+    if (Charm::versionLessThan(CharmVersion(), releaseVersion)) {
         informUserAboutNewRelease(releaseVersion, data.link, data.releaseInformationLink);
     } else {
         if (data.verbose)
@@ -621,7 +637,7 @@ void TimeTrackingWindow::slotCheckForUpdates(CheckForUpdatesJob::JobData data)
 void TimeTrackingWindow::informUserAboutNewRelease(const QString &releaseVersion, const QUrl &link,
                                                    const QString &releaseInfoLink)
 {
-    QString localVersion = QStringLiteral(CHARM_VERSION);
+    QString localVersion = CharmVersion();
     localVersion.truncate(releaseVersion.length());
     CharmNewReleaseDialog dialog(this);
     dialog.setVersion(releaseVersion, localVersion);
@@ -693,15 +709,6 @@ void TimeTrackingWindow::maybeIdle(IdleDetector *detector)
     detector->clear();
 }
 
-static void setValueIfNotNull(QSettings *s, const QString &key, const QString &value)
-{
-    if (!value.isNull()) {
-        s->setValue(key, value);
-    } else {
-        s->remove(key);
-    }
-}
-
 void TimeTrackingWindow::importTasksFromDeviceOrFile(QIODevice *device, const QString &filename,
                                                      bool verbose)
 {
@@ -741,34 +748,17 @@ void TimeTrackingWindow::importTasksFromDeviceOrFile(QIODevice *device, const QS
             }
         }
 
-        QSettings settings;
-        settings.beginGroup(QStringLiteral("httpconfig"));
-        const QString userName = settings.value(QStringLiteral("username")).toString();
-        setValueIfNotNull(&settings, QStringLiteral("username"),
-                          exporter.metadata(QStringLiteral("username")));
-        const QString currentUserName = settings.value(QStringLiteral("username")).toString();
-        setValueIfNotNull(&settings, QStringLiteral("portalUrl"),
-                          exporter.metadata(QStringLiteral("portal-url")));
-        setValueIfNotNull(&settings, QStringLiteral("loginUrl"),
-                          exporter.metadata(QStringLiteral("login-url")));
-        setValueIfNotNull(&settings, QStringLiteral("timesheetUploadUrl"),
-                          exporter.metadata(QStringLiteral("timesheet-upload-url")));
-        setValueIfNotNull(&settings, QStringLiteral("projectCodeDownloadUrl"),
-                          exporter.metadata(QStringLiteral("project-code-download-url")));
-        settings.endGroup();
-        settings.beginGroup(QStringLiteral("users"));
-        setValueIfNotNull(&settings, QStringLiteral("portalUrl"),
-                          exporter.metadata(QStringLiteral("portal-url")));
-        setValueIfNotNull(&settings, QStringLiteral("loginUrl"),
-                          exporter.metadata(QStringLiteral("login-url")));
-        settings.setValue(QStringLiteral("userInfoDownloadUrl"),
-                          QLatin1String("https://lotsofcake.kdab.com/KdabHome/rest/user"));
-        settings.endGroup();
+        Lotsofcake::Configuration lotsofcakeConfig;
+        const auto oldUserName = lotsofcakeConfig.username();
 
-        ApplicationCore::instance().setHttpActionsVisible(true);
+        lotsofcakeConfig.importFromTaskExport(exporter);
+
+        const auto newUserName = lotsofcakeConfig.username();
+
+        ApplicationCore::instance().setHttpActionsVisible(lotsofcakeConfig.isConfigured());
 
         // update user info in case the user name has changed
-        if (!currentUserName.isEmpty() && (currentUserName != userName))
+        if (!oldUserName.isEmpty() && oldUserName != newUserName)
             slotGetUserInfo();
     } catch (const CharmException &e) {
         const QString title = tr("Invalid Task Definitions");
@@ -786,26 +776,83 @@ void TimeTrackingWindow::importTasksFromDeviceOrFile(QIODevice *device, const QS
     }
 }
 
+void TimeTrackingWindow::uploadStagedTimesheet()
+{
+    try {
+        if (m_uploadingStagedTimesheet)
+            return;
+
+        const Lotsofcake::Configuration configuration;
+        if (!configuration.isConfigured())
+            return;
+
+        const auto today = QDate::currentDate();
+        const auto lastUpload = configuration.lastStagedTimesheetUpload();
+
+        if (lastUpload.isValid() && lastUpload >= today)
+            return;
+
+        const auto thisWeek = TimeSpans().thisWeek();
+        const auto weekStart = thisWeek.timespan.first;
+        const auto yesterday = TimeSpans().yesterday().timespan.second;
+
+        if (yesterday < weekStart)
+            return;
+
+        int year = 0;
+        const auto weekNumber = today.weekNumber(&year);
+        WeeklyTimesheetXmlWriter timesheet;
+        timesheet.setDataModel(DATAMODEL);
+        timesheet.setYear(year);
+        timesheet.setWeekNumber(weekNumber);
+        timesheet.setIncludeTaskList(false);
+
+        const auto matchingEventIds = DATAMODEL->eventsThatStartInTimeFrame(weekStart, yesterday);
+        EventList events;
+        events.reserve(matchingEventIds.size());
+        Q_FOREACH (const EventId &id, matchingEventIds)
+            events.append(DATAMODEL->eventForId(id));
+        timesheet.setEvents(events);
+
+        QScopedPointer<UploadTimesheetJob> job(new UploadTimesheetJob);
+        connect(job.data(), &HttpJob::finished, this, [this](HttpJob *job) {
+            m_uploadingStagedTimesheet = false;
+            if (job->error() == HttpJob::NoError) {
+                Lotsofcake::Configuration configuration;
+                configuration.setLastStagedTimesheetUpload(QDate::currentDate());
+            }
+        });
+
+        job->setUsername(configuration.username());
+        job->setUploadUrl(configuration.timesheetUploadUrl());
+        job->setStatus(UploadTimesheetJob::Staged);
+        job->setPayload(timesheet.saveToXml());
+        job.take()->start();
+        m_uploadingStagedTimesheet = true;
+    } catch (const XmlSerializationException &e) {
+        QMessageBox::critical(this, tr("Error generating the staged timesheet"), e.what());
+    }
+}
+
 void TimeTrackingWindow::slotGetUserInfo()
 {
-    if (!HttpJob::credentialsAvailable())
+    Lotsofcake::Configuration configuration;
+    if (!configuration.isConfigured())
         return;
 
-    QSettings settings;
-    settings.beginGroup(QStringLiteral("httpconfig"));
-    const QString userName = settings.value(QStringLiteral("username")).toString();
-    settings.endGroup();
+    const auto restUrl = configuration.restUrl();
+    const auto userName = configuration.username();
 
-    settings.beginGroup(QStringLiteral("users"));
-    settings.setValue(QStringLiteral("userInfoDownloadUrl"),
-                      QStringLiteral("https://lotsofcake.kdab.com/KdabHome/rest/user?user=%1").arg(
-                          userName));
-    settings.endGroup();
-
-    GetUserInfoJob *client = new GetUserInfoJob(this, QStringLiteral("users"));
-    client->setSchema(userName);
-    connect(client, SIGNAL(finished(HttpJob*)), this, SLOT(slotUserInfoDownloaded(HttpJob*)));
-    client->start();
+    auto url = QUrl(restUrl);
+    url.setPath(url.path() + QLatin1String("user"));
+    QUrlQuery query;
+    query.addQueryItem(QLatin1String("user"), userName);
+    url.setQuery(query);
+    auto job = new RestJob(this);
+    job->setUsername(userName);
+    job->setUrl(url);
+    connect(job, &RestJob::finished, this, &TimeTrackingWindow::slotUserInfoDownloaded);
+    job->start();
 }
 
 void TimeTrackingWindow::slotUserInfoDownloaded(HttpJob *job_)
@@ -813,7 +860,7 @@ void TimeTrackingWindow::slotUserInfoDownloaded(HttpJob *job_)
     // getUserInfo done -> sync task
     slotSyncTasksAutomatic();
 
-    auto job = qobject_cast<GetUserInfoJob *>(job_);
+    auto job = qobject_cast<RestJob*>(job_);
     Q_ASSERT(job);
     if (job->error() == HttpJob::Canceled)
         return;
@@ -824,7 +871,7 @@ void TimeTrackingWindow::slotUserInfoDownloaded(HttpJob *job_)
         return;
     }
 
-    const auto readData = job->userInfo();
+    const auto readData = job->resultData();
 
     QJsonParseError parseError;
     const auto doc = QJsonDocument::fromJson(readData, &parseError);
