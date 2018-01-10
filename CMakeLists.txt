@@ -1,6 +1,10 @@
 CMAKE_MINIMUM_REQUIRED( VERSION 2.8.12 )
 PROJECT( Charm CXX )
 
+if(EXISTS ${CMAKE_SOURCE_DIR}/config.cmake)
+    include(${CMAKE_SOURCE_DIR}/config.cmake)
+endif()
+
 include(FeatureSummary)
 
 set(ECM_MODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/cmake/ECM/modules/")
